@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1220">
+<meta name="description" content="Telegram Report Center">
+<title>Telegram Report Center</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, "Segoe UI", Tahoma, sans-serif;
+    background: radial-gradient(circle at top, #16253d 0%, #0b1220 45%, #070c15 100%);
+    color: #fff;
+    padding: 70px 16px 40px;
+}
+
+/* الحقوق أعلى الصفحة */
+.copyright-top {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(7, 12, 21, 0.92);
+    backdrop-filter: blur(12px);
+
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+
+    color: #8bd8ff;
+    font-size: 14px;
+    font-weight: bold;
+
+    z-index: 9999;
+}
+
+/* الحاوية */
+.container {
+    width: 100%;
+    max-width: 680px;
+    margin: 0 auto;
+
+    background: rgba(20, 31, 51, 0.94);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 22px;
+
+    padding: 28px 22px;
+
+    box-shadow: 0 25px 70px rgba(0,0,0,0.45);
+    backdrop-filter: blur(14px);
+}
+
+/* الشعار */
+.logo {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: linear-gradient(135deg, #229ed9, #1677a7);
+
+    font-size: 30px;
+
+    box-shadow: 0 8px 30px rgba(34,158,217,0.3);
+}
+
+h1 {
+    text-align: center;
+    font-size: 27px;
+    margin-bottom: 9px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #9eabc0;
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 28px;
+}
+
+/* الحقول */
+.field {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    color: #e7edf7;
+}
+
+.optional {
+    color: #7f8ca3;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+input,
+textarea {
+    width: 100%;
+
+    border: 1px solid #34445d;
+    border-radius: 12px;
+
+    background: #0b1424;
+    color: #fff;
+
+    padding: 14px;
+
+    font-family: inherit;
+    font-size: 15px;
+
+    outline: none;
+
+    transition: border-color .2s, box-shadow .2s;
+}
+
+input {
+    height: 50px;
+}
+
+textarea {
+    min-height: 230px;
+    resize: vertical;
+    line-height: 1.75;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #68768d;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #229ed9;
+    box-shadow: 0 0 0 3px rgba(34,158,217,0.12);
+}
+
+/* زر الإرسال */
+.send-button {
+    width: 100%;
+    min-height: 54px;
+
+    border: none;
+    border-radius: 13px;
+
+    background: linear-gradient(135deg, #229ed9, #168ac0);
+
+    color: #fff;
+
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: transform .15s, box-shadow .15s;
+
+    box-shadow: 0 8px 25px rgba(34,158,217,0.2);
+}
+
+.send-button:hover {
+    box-shadow: 0 10px 30px rgba(34,158,217,0.3);
+}
+
+.send-button:active {
+    transform: scale(.98);
+}
+
+/* الملاحظة */
+.info-box {
+    margin-top: 18px;
+
+    padding: 13px 14px;
+
+    border-radius: 11px;
+
+    background: rgba(34,158,217,0.07);
+
+    border: 1px solid rgba(34,158,217,0.15);
+
+    color: #9caac0;
+
+    font-size: 12px;
+    line-height: 1.7;
+
+    text-align: center;
+}
+
+/* الحالة */
+#status {
+    display: none;
+
+    margin-top: 16px;
+    padding: 12px;
+
+    border-radius: 10px;
+
+    text-align: center;
+
+    background: rgba(34,158,217,0.10);
+
+    color: #8bd8ff;
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* الحقوق أسفل الموقع */
+.copyright-bottom {
+    max-width: 680px;
+    margin: 25px auto 0;
+
+    padding: 18px 10px;
+
+    text-align: center;
+
+    border-top: 1px solid rgba(255,255,255,0.07);
+
+    color: #65738a;
+
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+/* الهاتف */
+@media (max-width: 480px) {
+    body {
+        padding: 65px 11px 30px;
+    }
+
+    .container {
+        padding: 24px 16px;
+        border-radius: 18px;
+    }
+
+    h1 {
+        font-size: 23px;
+    }
+
+    .subtitle {
+        font-size: 13px;
+    }
+
+    textarea {
+        min-height: 210px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- الحقوق أعلى الموقع -->
+<div class="copyright-top">
+    © علي رضا الساطي
+</div>
+
+<!-- المحتوى -->
+<main class="container">
+
+    <div class="logo">
+        ✈️
+    </div>
+
+    <h1>
+        Telegram Report Center
+    </h1>
+
+    <p class="subtitle">
+        نموذج لإعداد بلاغات المخالفات وإرسالها عبر البريد الإلكتروني.
+    </p>
+
+    <form id="reportForm">
+
+        <!-- بريد الدعم -->
+        <div class="field">
+
+            <label for="email">
+                بريد الدعم
+                <span class="optional">(اختياري)</span>
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                autocomplete="email"
+                placeholder="support@example.com"
+            >
+
+        </div>
+
+        <!-- الموضوع -->
+        <div class="field">
+
+            <label for="subject">
+                الموضوع
+            </label>
+
+            <input
+                type="text"
+                id="subject"
+                maxlength="200"
+                placeholder="اكتب موضوع البلاغ"
+                required
+            >
+
+        </div>
+
+        <!-- نص البلاغ -->
+        <div class="field">
+
+            <label for="message">
+                نص البلاغ
+            </label>
+
+            <textarea
+                id="message"
+                maxlength="10000"
+                placeholder="اكتب تفاصيل البلاغ هنا..."
+                required
+            ></textarea>
+
+        </div>
+
+        <!-- زر الإرسال -->
+        <button
+            type="submit"
+            class="send-button"
+            id="sendButton">
+
+            ✉️ تجهيز البلاغ وإرسال البريد
+
+        </button>
+
+    </form>
+
+    <div class="info-box">
+
+        عند الضغط على الزر سيتم فتح تطبيق البريد في جهازك
+        مع تجهيز المستلم والموضوع ونص البلاغ.
+        راجع المعلومات ثم اضغط «إرسال» بنفسك.
+
+    </div>
+
+    <div id="status"></div>
+
+</main>
+
+<!-- الحقوق أسفل الموقع -->
+<footer class="copyright-bottom">
+
+    © 2026 علي رضا الساطي
+    <br>
+    Telegram Report Center
+
+</footer>
+
+<script>
+
+/* استعادة البيانات عند الرجوع للموقع */
+function restoreForm() {
+
+    const savedEmail =
+        sessionStorage.getItem("report_email");
+
+    const savedSubject =
+        sessionStorage.getItem("report_subject");
+
+    const savedMessage =
+        sessionStorage.getItem("report_message");
+
+    if (savedEmail !== null) {
+        document.getElementById("email").value = savedEmail;
+    }
+
+    if (savedSubject !== null) {
+        document.getElementById("subject").value = savedSubject;
+    }
+
+    if (savedMessage !== null) {
+        document.getElementById("message").value = savedMessage;
+    }
+}
+
+
+/* تجهيز البريد */
+document
+.getElementById("reportForm")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const email =
+        document.getElementById("email")
+        .value
+        .trim();
+
+    const subject =
+        document.getElementById("subject")
+        .value
+        .trim();
+
+    const message =
+        document.getElementById("message")
+        .value
+        .trim();
+
+    /* التحقق */
+    if (!subject || !message) {
+
+        alert("يرجى كتابة الموضوع ونص البلاغ.");
+
+        return;
+    }
+
+    /* حفظ البيانات */
+    sessionStorage.setItem(
+        "report_email",
+        email
+    );
+
+    sessionStorage.setItem(
+        "report_subject",
+        subject
+    );
+
+    sessionStorage.setItem(
+        "report_message",
+        message
+    );
+
+    /* إنشاء رابط البريد */
+    let mailto = "mailto:";
+
+    if (email) {
+        mailto += encodeURIComponent(email);
+    }
+
+    mailto +=
+        "?subject=" +
+        encodeURIComponent(subject);
+
+    mailto +=
+        "&body=" +
+        encodeURIComponent(message);
+
+    /* إظهار الحالة */
+    const status =
+        document.getElementById("status");
+
+    status.style.display = "block";
+
+    status.innerHTML =
+        "📨 جارٍ فتح تطبيق البريد..." +
+        "<br>" +
+        "بعد إرسال الرسالة يمكنك العودة إلى هذه الصفحة.";
+
+    /* فتح البريد */
+    window.location.href = mailto;
+
+});
+
+
+/* عند الرجوع من البريد */
+window.addEventListener(
+    "pageshow",
+    function() {
+        restoreForm();
+    }
+);
+
+
+/* استعادة البيانات عند فتح الموقع */
+restoreForm();
+
+</script>
+
+</body>
+  </html>
