@@ -2,569 +2,330 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>كبس كبس حبيبي</title>
 
 <style>
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-:root{
-  --bg:#06070d;
-  --card:rgba(15,17,28,.72);
-  --card2:rgba(255,255,255,.055);
-  --text:#fff;
-  --muted:#9da3b5;
-  --border:rgba(255,255,255,.1);
-  --accent:#8b5cf6;
-  --accent2:#06b6d4;
-  --danger:#ff4d6d;
-  --shadow:0 25px 80px rgba(0,0,0,.45);
-}
-
-body.light{
-  --bg:#eef1f8;
-  --card:rgba(255,255,255,.78);
-  --card2:rgba(0,0,0,.045);
-  --text:#111827;
-  --muted:#5f6675;
-  --border:rgba(0,0,0,.1);
-  --shadow:0 25px 70px rgba(40,45,70,.18);
+box-sizing:border-box;
+margin:0;
+padding:0
 }
 
 body{
-  min-height:100vh;
-  font-family:Arial,Tahoma,sans-serif;
-  color:var(--text);
-  background:
-    radial-gradient(circle at 15% 15%,rgba(139,92,246,.23),transparent 28%),
-    radial-gradient(circle at 85% 20%,rgba(6,182,212,.18),transparent 25%),
-    radial-gradient(circle at 50% 100%,rgba(236,72,153,.12),transparent 30%),
-    var(--bg);
-  overflow-x:hidden;
-  transition:.4s;
+font-family:Arial,Tahoma,sans-serif;
+background:#080b12;
+color:#fff;
+min-height:100vh
 }
 
-/* الخلفية */
-.bg{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  overflow:hidden;
-  z-index:-2;
+.top{
+text-align:center;
+padding:22px 10px 8px;
+font-size:15px;
+color:#aaa
 }
 
-.orb{
-  position:absolute;
-  width:300px;
-  height:300px;
-  border-radius:50%;
-  filter:blur(70px);
-  opacity:.35;
-  animation:float 9s ease-in-out infinite alternate;
-}
-
-.orb.one{
-  background:#8b5cf6;
-  top:-100px;
-  right:-80px;
-}
-
-.orb.two{
-  background:#06b6d4;
-  bottom:-100px;
-  left:-80px;
-  animation-delay:2s;
-}
-
-.orb.three{
-  background:#ec4899;
-  top:45%;
-  left:40%;
-  width:180px;
-  height:180px;
-  animation-delay:4s;
-}
-
-@keyframes float{
-  from{transform:translate(0,0) scale(1)}
-  to{transform:translate(45px,-35px) scale(1.18)}
-}
-
-.grid{
-  position:absolute;
-  inset:0;
-  opacity:.12;
-  background-image:
-    linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px);
-  background-size:45px 45px;
-  mask-image:linear-gradient(to bottom,transparent,#000 20%,#000 80%,transparent);
-}
-
-/* نجوم */
-.stars span{
-  position:absolute;
-  width:3px;
-  height:3px;
-  background:#fff;
-  border-radius:50%;
-  box-shadow:0 0 10px #fff;
-  animation:twinkle 3s infinite ease-in-out;
-}
-
-@keyframes twinkle{
-  0%,100%{opacity:.15;transform:scale(.7)}
-  50%{opacity:1;transform:scale(1.4)}
-}
-
-/* الحقوق أعلى الصفحة */
-.top-rights{
-  text-align:center;
-  padding:25px 15px 5px;
-  font-size:14px;
-  color:var(--muted);
-  letter-spacing:.5px;
-}
-
-.top-rights strong{
-  color:var(--text);
-  font-size:16px;
-}
-
-/* الحاوية */
 .container{
-  width:min(900px,92%);
-  margin:auto;
-  padding:25px 0 45px;
+width:92%;
+max-width:700px;
+margin:auto;
+padding:20px 0 40px
 }
 
-/* العنوان */
 .hero{
-  text-align:center;
-  padding:25px 10px 30px;
+text-align:center;
+padding:15px 0 25px
 }
 
-.logo{
-  width:92px;
-  height:92px;
-  margin:0 auto 20px;
-  border-radius:28px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:42px;
-  background:linear-gradient(135deg,#8b5cf6,#06b6d4);
-  box-shadow:
-    0 0 35px rgba(139,92,246,.5),
-    0 0 80px rgba(6,182,212,.18);
-  animation:logoFloat 3s ease-in-out infinite;
+.hero h1{
+font-size:40px;
+font-weight:900;
+color:#fff;
+margin-bottom:8px
 }
 
-@keyframes logoFloat{
-  0%,100%{transform:translateY(0) rotate(-2deg)}
-  50%{transform:translateY(-8px) rotate(2deg)}
+.hero p{
+color:#999;
+font-size:14px
 }
 
-h1{
-  font-size:clamp(34px,8vw,62px);
-  font-weight:900;
-  background:linear-gradient(90deg,#fff,#b69cff,#67e8f9,#fff);
-  background-size:250%;
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-  animation:gradient 5s linear infinite;
-}
-
-@keyframes gradient{
-  to{background-position:250%}
-}
-
-.subtitle{
-  color:var(--muted);
-  margin-top:10px;
-  font-size:15px;
-}
-
-/* الكارد */
 .card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:28px;
-  padding:24px;
-  backdrop-filter:blur(22px);
-  -webkit-backdrop-filter:blur(22px);
-  box-shadow:var(--shadow);
-  position:relative;
-  overflow:hidden;
-}
-
-.card::before{
-  content:"";
-  position:absolute;
-  width:220px;
-  height:2px;
-  top:0;
-  left:50%;
-  transform:translateX(-50%);
-  background:linear-gradient(90deg,transparent,#8b5cf6,#06b6d4,transparent);
-  box-shadow:0 0 25px #8b5cf6;
+background:#111620;
+border:1px solid #252c38;
+border-radius:18px;
+padding:20px
 }
 
 .field{
-  margin-bottom:17px;
+margin-bottom:16px
 }
 
 label{
-  display:block;
-  margin-bottom:8px;
-  font-size:14px;
-  font-weight:bold;
+display:block;
+font-size:14px;
+font-weight:bold;
+margin-bottom:7px
 }
 
 input,textarea{
-  width:100%;
-  border:1px solid var(--border);
-  outline:none;
-  border-radius:16px;
-  background:var(--card2);
-  color:var(--text);
-  padding:15px;
-  font-size:15px;
-  transition:.3s;
+width:100%;
+background:#0b0f16;
+border:1px solid #29313d;
+border-radius:12px;
+padding:14px;
+font-size:15px;
+color:#fff;
+outline:none
 }
 
 input:focus,textarea:focus{
-  border-color:var(--accent);
-  box-shadow:0 0 0 4px rgba(139,92,246,.12),0 0 25px rgba(139,92,246,.15);
-  transform:translateY(-1px);
+border-color:#7c5cff
 }
 
 textarea{
-  min-height:190px;
-  resize:vertical;
+height:180px;
+resize:vertical
 }
 
-/* العداد */
 .counter{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  padding:17px;
-  border-radius:18px;
-  background:var(--card2);
-  border:1px solid var(--border);
-  margin:20px 0;
+display:flex;
+align-items:center;
+justify-content:space-between;
+background:#0b0f16;
+border:1px solid #252c38;
+border-radius:13px;
+padding:13px 15px;
+margin:18px 0
+}
+
+.counter-title{
+font-size:12px;
+color:#999
 }
 
 .counter-number{
-  font-size:30px;
-  font-weight:900;
-  background:linear-gradient(90deg,#8b5cf6,#06b6d4);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
+font-size:27px;
+font-weight:bold;
+color:#9b85ff;
+margin-top:3px
 }
 
 .counter-buttons{
-  display:flex;
-  gap:8px;
+display:flex;
+gap:7px
 }
 
 .small-btn{
-  width:42px;
-  height:42px;
-  border:1px solid var(--border);
-  border-radius:13px;
-  background:var(--card2);
-  color:var(--text);
-  font-size:22px;
-  cursor:pointer;
-  transition:.25s;
+width:40px;
+height:40px;
+border:1px solid #303846;
+background:#151b25;
+color:#fff;
+border-radius:10px;
+font-size:21px;
+cursor:pointer
 }
 
-.small-btn:hover{
-  transform:translateY(-3px);
-  border-color:var(--accent);
-  box-shadow:0 8px 25px rgba(139,92,246,.2);
-}
-
-/* الأزرار */
 .buttons{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px
 }
 
-button.action{
-  position:relative;
-  overflow:hidden;
-  border:0;
-  padding:16px;
-  border-radius:16px;
-  cursor:pointer;
-  color:white;
-  font-size:15px;
-  font-weight:bold;
-  transition:.3s;
-}
-
-button.action::after{
-  content:"";
-  position:absolute;
-  top:0;
-  left:-120%;
-  width:70%;
-  height:100%;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);
-  transform:skewX(-20deg);
-  transition:.6s;
-}
-
-button.action:hover::after{
-  left:140%;
-}
-
-button.action:hover{
-  transform:translateY(-3px);
+.action{
+border:0;
+border-radius:12px;
+padding:15px;
+font-size:14px;
+font-weight:bold;
+color:#fff;
+cursor:pointer
 }
 
 .send{
-  background:linear-gradient(135deg,#8b5cf6,#06b6d4);
-  box-shadow:0 12px 35px rgba(99,102,241,.25);
+background:#7657e8
 }
 
 .copy{
-  background:linear-gradient(135deg,#0ea5e9,#2563eb);
+background:#2563eb
 }
 
 .save{
-  background:linear-gradient(135deg,#10b981,#059669);
+background:#16835c
 }
 
 .clear{
-  background:linear-gradient(135deg,#ef4444,#ec4899);
+background:#c53f55
 }
 
-/* المعلومات */
 .note{
-  margin-top:18px;
-  padding:15px;
-  border-radius:16px;
-  background:rgba(139,92,246,.07);
-  border:1px solid rgba(139,92,246,.15);
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.8;
+margin-top:15px;
+padding:13px;
+border-radius:12px;
+background:#0b0f16;
+border:1px solid #252c38;
+color:#999;
+font-size:12px;
+line-height:1.7
 }
 
 .stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-top:14px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+margin-top:12px
 }
 
 .stat{
-  text-align:center;
-  padding:14px 8px;
-  border:1px solid var(--border);
-  background:var(--card2);
-  border-radius:16px;
+text-align:center;
+padding:12px 5px;
+background:#0b0f16;
+border:1px solid #252c38;
+border-radius:11px
 }
 
 .stat b{
-  display:block;
-  font-size:18px;
-  margin-bottom:4px;
+display:block;
+font-size:16px;
+margin-bottom:4px
 }
 
 .stat span{
-  color:var(--muted);
-  font-size:11px;
-}
-
-/* تبديل الوضع */
-.theme{
-  position:fixed;
-  left:18px;
-  bottom:18px;
-  width:50px;
-  height:50px;
-  border-radius:50%;
-  border:1px solid var(--border);
-  background:var(--card);
-  color:var(--text);
-  cursor:pointer;
-  font-size:21px;
-  backdrop-filter:blur(15px);
-  box-shadow:var(--shadow);
-  z-index:10;
-  transition:.3s;
-}
-
-.theme:hover{
-  transform:rotate(25deg) scale(1.08);
-}
-
-/* Toast */
-.toast{
-  position:fixed;
-  bottom:25px;
-  right:50%;
-  transform:translate(50%,120px);
-  background:rgba(15,17,28,.9);
-  color:#fff;
-  padding:13px 20px;
-  border-radius:15px;
-  border:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(15px);
-  box-shadow:0 15px 40px rgba(0,0,0,.3);
-  opacity:0;
-  transition:.4s;
-  z-index:20;
-  font-size:14px;
-}
-
-.toast.show{
-  transform:translate(50%,0);
-  opacity:1;
+font-size:10px;
+color:#888
 }
 
 footer{
-  text-align:center;
-  color:var(--muted);
-  font-size:12px;
-  padding-top:25px;
+text-align:center;
+color:#777;
+font-size:12px;
+padding-top:22px
 }
 
-/* موبايل */
-@media(max-width:600px){
-  .container{
-    width:94%;
-  }
+.theme{
+position:fixed;
+left:15px;
+bottom:15px;
+width:44px;
+height:44px;
+border:1px solid #303846;
+border-radius:50%;
+background:#111620;
+color:#fff;
+font-size:18px;
+cursor:pointer
+}
 
-  .card{
-    padding:18px;
-    border-radius:23px;
-  }
+.toast{
+position:fixed;
+bottom:70px;
+right:50%;
+transform:translateX(50%);
+background:#161c27;
+border:1px solid #303846;
+color:#fff;
+padding:11px 17px;
+border-radius:10px;
+font-size:13px;
+display:none
+}
 
-  .buttons{
-    grid-template-columns:1fr;
-  }
+.toast.show{
+display:block
+}
 
-  .stats{
-    grid-template-columns:1fr 1fr 1fr;
-  }
+@media(max-width:550px){
+.hero h1{
+font-size:34px
+}
 
-  h1{
-    font-size:39px;
-  }
+.card{
+padding:16px
+}
+
+.buttons{
+grid-template-columns:1fr
+}
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg">
-  <div class="orb one"></div>
-  <div class="orb two"></div>
-  <div class="orb three"></div>
-  <div class="grid"></div>
-
-  <div class="stars">
-    <span style="top:12%;left:15%;animation-delay:.2s"></span>
-    <span style="top:25%;left:80%;animation-delay:1s"></span>
-    <span style="top:42%;left:8%;animation-delay:1.7s"></span>
-    <span style="top:55%;left:91%;animation-delay:.8s"></span>
-    <span style="top:72%;left:20%;animation-delay:2.2s"></span>
-    <span style="top:83%;left:76%;animation-delay:1.3s"></span>
-    <span style="top:35%;left:55%;animation-delay:2.6s"></span>
-    <span style="top:8%;left:48%;animation-delay:1.5s"></span>
-  </div>
-</div>
-
-<!-- الحقوق بالأعلى وفي المنتصف -->
-<div class="top-rights">
-  <strong>© 2026 علي رضا</strong>
+<div class="top">
+© 2026 علي رضا
 </div>
 
 <div class="container">
 
-  <section class="hero">
-    <div class="logo">⚡</div>
-    <h1>كبس كبس حبيبي</h1>
-    <p class="subtitle">اضبط كلشي وخلي الباقي علينا ✨</p>
-  </section>
+<div class="hero">
+<h1>كبس كبس حبيبي</h1>
+<p>جهّز رسالتك واضغط كبس كبس</p>
+</div>
 
-  <main class="card">
+<div class="card">
 
-    <div class="field">
-      <label>📧 إيميل الدعم</label>
-      <input id="email" type="email" placeholder="example@domain.com">
-    </div>
+<div class="field">
+<label>📧 إيميل الدعم</label>
+<input id="email" type="email" placeholder="example@domain.com">
+</div>
 
-    <div class="field">
-      <label>📝 الموضوع</label>
-      <input id="subject" type="text" placeholder="اكتب موضوع الرسالة">
-    </div>
+<div class="field">
+<label>📝 الموضوع</label>
+<input id="subject" type="text" placeholder="اكتب الموضوع">
+</div>
 
-    <div class="field">
-      <label>💬 النص</label>
-      <textarea id="message" placeholder="اكتب رسالتك هنا..."></textarea>
-    </div>
+<div class="field">
+<label>💬 النص</label>
+<textarea id="message" placeholder="اكتب رسالتك هنا..."></textarea>
+</div>
 
-    <div class="counter">
-      <div>
-        <div style="font-size:12px;color:var(--muted)">عدد مرات الكبس</div>
-        <div class="counter-number" id="reportCount">0</div>
-      </div>
+<div class="counter">
+<div>
+<div class="counter-title">عدد مرات الكبس</div>
+<div class="counter-number" id="reportCount">0</div>
+</div>
 
-      <div class="counter-buttons">
-        <button class="small-btn" id="minus">−</button>
-        <button class="small-btn" id="plus">+</button>
-      </div>
-    </div>
+<div class="counter-buttons">
+<button class="small-btn" id="minus">−</button>
+<button class="small-btn" id="plus">+</button>
+</div>
+</div>
 
-    <div class="buttons">
-      <button class="action send" id="sendMail">🚀 كبس كبس</button>
-      <button class="action copy" id="copy">📋 نسخ</button>
-      <button class="action save" id="save">💾 حفظ</button>
-      <button class="action clear" id="clear">🗑️ مسح</button>
-    </div>
+<div class="buttons">
+<button class="action send" id="sendMail">🚀 كبس كبس</button>
+<button class="action copy" id="copy">📋 نسخ</button>
+<button class="action save" id="save">💾 حفظ</button>
+<button class="action clear" id="clear">🗑️ مسح</button>
+</div>
 
-    <div class="note">
-      ✨ البيانات يتم حفظها داخل متصفحك فقط.
-      زر «كبس كبس» يفتح تطبيق البريد الموجود بجهازك مع تجهيز المستلم والموضوع والنص، وبعدها أنت تضغط إرسال بنفسك.
-    </div>
+<div class="note">
+البيانات محفوظة داخل المتصفح فقط. زر «كبس كبس» يفتح تطبيق البريد عندك مع تجهيز الرسالة، وأنت تضغط إرسال بنفسك.
+</div>
 
-    <div class="stats">
-      <div class="stat">
-        <b id="chars">0</b>
-        <span>حرف</span>
-      </div>
+<div class="stats">
+<div class="stat">
+<b id="chars">0</b>
+<span>حرف</span>
+</div>
 
-      <div class="stat">
-        <b id="words">0</b>
-        <span>كلمة</span>
-      </div>
+<div class="stat">
+<b id="words">0</b>
+<span>كلمة</span>
+</div>
 
-      <div class="stat">
-        <b id="state">جاهز</b>
-        <span>الحالة</span>
-      </div>
-    </div>
+<div class="stat">
+<b id="state">جاهز</b>
+<span>الحالة</span>
+</div>
+</div>
 
-  </main>
+</div>
 
-  <footer>
-    © 2026 علي رضا
-  </footer>
+<footer>
+© 2026 علي رضا
+</footer>
 
 </div>
 
@@ -584,166 +345,167 @@ const toast=document.getElementById("toast");
 
 let count=Number(localStorage.getItem("support_report_count")||0);
 
-function toastMsg(text){
-  toast.textContent=text;
-  toast.classList.add("show");
+function showToast(text){
+toast.textContent=text;
+toast.classList.add("show");
 
-  setTimeout(()=>{
-    toast.classList.remove("show");
-  },2200);
+setTimeout(()=>{
+toast.classList.remove("show");
+},1800);
 }
 
 function updateCounter(){
-  countEl.textContent=count;
-  localStorage.setItem("support_report_count",count);
+countEl.textContent=count;
+localStorage.setItem("support_report_count",count);
 }
 
 function updateStats(){
-  const text=message.value.trim();
+const text=message.value.trim();
 
-  chars.textContent=message.value.length;
-  words.textContent=text ? text.split(/\s+/).length : 0;
+chars.textContent=message.value.length;
+words.textContent=text ? text.split(/\s+/).length : 0;
 }
 
 function saveData(show=true){
-  localStorage.setItem("support_form_data",JSON.stringify({
-    email:email.value,
-    subject:subject.value,
-    message:message.value
-  }));
+localStorage.setItem("support_form_data",JSON.stringify({
+email:email.value,
+subject:subject.value,
+message:message.value
+}));
 
-  if(show) toastMsg("تم الحفظ بنجاح ✓");
+if(show) showToast("تم الحفظ ✓");
 }
 
 function loadData(){
-  try{
-    const data=JSON.parse(
-      localStorage.getItem("support_form_data")||"{}"
-    );
+try{
+const data=JSON.parse(
+localStorage.getItem("support_form_data")||"{}"
+);
 
-    email.value=data.email||"";
-    subject.value=data.subject||"";
-    message.value=data.message||"";
-  }catch(e){}
+email.value=data.email||"";
+subject.value=data.subject||"";
+message.value=data.message||"";
+}catch(e){}
 
-  updateCounter();
-  updateStats();
+updateCounter();
+updateStats();
 }
 
 function buildMail(){
-  const to=email.value.trim();
-  const sub=subject.value.trim();
-  const msg=message.value.trim();
+const to=email.value.trim();
+const sub=subject.value.trim();
+const msg=message.value.trim();
 
-  if(!to){
-    toastMsg("اكتب إيميل الدعم أولاً");
-    email.focus();
-    return null;
-  }
+if(!to){
+showToast("اكتب إيميل الدعم");
+email.focus();
+return null;
+}
 
-  if(!msg){
-    toastMsg("اكتب نص الرسالة أولاً");
-    message.focus();
-    return null;
-  }
+if(!msg){
+showToast("اكتب نص الرسالة");
+message.focus();
+return null;
+}
 
-  return "mailto:"+encodeURIComponent(to)
-    +"?subject="+encodeURIComponent(sub)
-    +"&body="+encodeURIComponent(msg);
+return "mailto:"+encodeURIComponent(to)+
+"?subject="+encodeURIComponent(sub)+
+"&body="+encodeURIComponent(msg);
 }
 
 document.getElementById("sendMail").onclick=()=>{
-  const mail=buildMail();
+const mail=buildMail();
 
-  if(!mail) return;
+if(!mail)return;
 
-  saveData(false);
+saveData(false);
 
-  count++;
-  updateCounter();
+count++;
+updateCounter();
 
-  state.textContent="تم الفتح";
-  toastMsg("تم فتح تطبيق البريد 🚀");
+state.textContent="تم الفتح";
+showToast("تم فتح البريد");
 
-  setTimeout(()=>{
-    window.location.href=mail;
-  },250);
+setTimeout(()=>{
+window.location.href=mail;
+},150);
 };
 
 document.getElementById("copy").onclick=async()=>{
-  const text=
+const text=
 `الإيميل: ${email.value}
 الموضوع: ${subject.value}
 
 ${message.value}`;
 
-  try{
-    await navigator.clipboard.writeText(text);
-    toastMsg("تم النسخ ✓");
-  }catch(e){
-    toastMsg("تعذر النسخ");
-  }
+try{
+await navigator.clipboard.writeText(text);
+showToast("تم النسخ ✓");
+}catch(e){
+showToast("تعذر النسخ");
+}
 };
 
 document.getElementById("save").onclick=()=>{
-  saveData(true);
-  state.textContent="محفوظ";
+saveData();
+state.textContent="محفوظ";
 };
 
 document.getElementById("clear").onclick=()=>{
-  email.value="";
-  subject.value="";
-  message.value="";
+email.value="";
+subject.value="";
+message.value="";
 
-  localStorage.removeItem("support_form_data");
+localStorage.removeItem("support_form_data");
 
-  updateStats();
-  state.textContent="جاهز";
-  toastMsg("تم مسح البيانات");
+updateStats();
+state.textContent="جاهز";
+
+showToast("تم المسح");
 };
 
 document.getElementById("plus").onclick=()=>{
-  count++;
-  updateCounter();
+count++;
+updateCounter();
 };
 
 document.getElementById("minus").onclick=()=>{
-  if(count>0) count--;
-  updateCounter();
+if(count>0)count--;
+updateCounter();
 };
 
 [email,subject,message].forEach(el=>{
-  el.addEventListener("input",()=>{
-    updateStats();
-    saveData(false);
-    state.textContent="يتم الحفظ";
-  });
+el.addEventListener("input",()=>{
+updateStats();
+saveData(false);
+state.textContent="محفوظ تلقائيًا";
+});
 });
 
 const themeBtn=document.getElementById("theme");
 
 function setTheme(mode){
-  if(mode==="light"){
-    document.body.classList.add("light");
-    themeBtn.textContent="🌙";
-  }else{
-    document.body.classList.remove("light");
-    themeBtn.textContent="☀️";
-  }
+if(mode==="light"){
+document.body.style.background="#f2f4f8";
+document.body.style.color="#111";
+themeBtn.textContent="🌙";
+}else{
+document.body.style.background="#080b12";
+document.body.style.color="#fff";
+themeBtn.textContent="☀️";
+}
 
-  localStorage.setItem("support_theme",mode);
+localStorage.setItem("support_theme",mode);
 }
 
 themeBtn.onclick=()=>{
-  const light=document.body.classList.contains("light");
-  setTheme(light?"dark":"light");
+const light=localStorage.getItem("support_theme")==="light";
+setTheme(light?"dark":"light");
 };
 
-const savedTheme=localStorage.getItem("support_theme")||"dark";
-setTheme(savedTheme);
-
+setTheme(localStorage.getItem("support_theme")||"dark");
 loadData();
 </script>
 
 </body>
-     </html>
+               </html>
