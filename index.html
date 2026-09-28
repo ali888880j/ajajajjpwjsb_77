@@ -3,425 +3,644 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#080b14">
+<meta name="theme-color" content="#070a14">
 <title>Support Center</title>
 
 <style>
 *{box-sizing:border-box}
 
 :root{
-  --bg:#070a12;
-  --card:rgba(17,22,35,.78);
-  --card2:rgba(25,31,48,.9);
-  --text:#f5f7ff;
-  --muted:#8f9ab0;
-  --border:rgba(255,255,255,.09);
-  --accent:#6c63ff;
-  --accent2:#00d4ff;
-  --danger:#ff5577;
-  --success:#35d07f;
-  --shadow:0 30px 90px rgba(0,0,0,.42);
+ --bg:#050711;
+ --card:rgba(15,20,35,.72);
+ --card2:rgba(20,27,46,.9);
+ --text:#f8f9ff;
+ --muted:#8f9bb2;
+ --line:rgba(255,255,255,.09);
+ --accent:#7467ff;
+ --accent2:#00d9ff;
+ --success:#35df88;
+ --danger:#ff5577;
+ --shadow:0 30px 100px rgba(0,0,0,.45);
 }
 
 body.light{
-  --bg:#eef2f8;
-  --card:rgba(255,255,255,.78);
-  --card2:#fff;
-  --text:#121826;
-  --muted:#657083;
-  --border:rgba(0,0,0,.09);
+ --bg:#edf1f8;
+ --card:rgba(255,255,255,.72);
+ --card2:rgba(255,255,255,.94);
+ --text:#111827;
+ --muted:#647084;
+ --line:rgba(0,0,0,.09);
 }
 
 html{scroll-behavior:smooth}
 
 body{
-  margin:0;
-  min-height:100vh;
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  color:var(--text);
-  background:
-    radial-gradient(circle at 15% 10%,rgba(108,99,255,.18),transparent 30%),
-    radial-gradient(circle at 85% 20%,rgba(0,212,255,.12),transparent 30%),
-    var(--bg);
-  overflow-x:hidden;
-  transition:.3s;
+ margin:0;
+ min-height:100vh;
+ color:var(--text);
+ font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ background:
+ radial-gradient(circle at 10% 0%,rgba(116,103,255,.18),transparent 30%),
+ radial-gradient(circle at 90% 35%,rgba(0,217,255,.13),transparent 28%),
+ var(--bg);
+ overflow-x:hidden;
+ transition:background .35s,color .35s;
 }
 
-button,input,textarea{font:inherit}
-
-button{cursor:pointer}
+/* ---------- BACKGROUND ---------- */
 
 .background{
-  position:fixed;
-  inset:0;
-  overflow:hidden;
-  pointer-events:none;
-  z-index:-1;
+ position:fixed;
+ inset:0;
+ overflow:hidden;
+ pointer-events:none;
+ z-index:-1;
 }
 
 .glow{
-  position:absolute;
-  width:420px;
-  height:420px;
-  border-radius:50%;
-  filter:blur(100px);
-  opacity:.16;
-  background:var(--accent);
-  animation:move 13s ease-in-out infinite alternate;
+ position:absolute;
+ width:430px;
+ height:430px;
+ border-radius:50%;
+ filter:blur(110px);
+ opacity:.16;
+ background:var(--accent);
+ animation:floatGlow 14s ease-in-out infinite alternate;
 }
 
-.glow.one{top:-180px;left:-120px}
+.glow.one{
+ top:-210px;
+ left:-130px;
+}
+
 .glow.two{
-  right:-180px;
-  bottom:-120px;
-  background:var(--accent2);
-  animation-delay:3s;
+ right:-180px;
+ bottom:-180px;
+ background:var(--accent2);
+ animation-delay:3s;
 }
 
-@keyframes move{
-  from{transform:translate(0,0)}
-  to{transform:translate(80px,50px) scale(1.12)}
+@keyframes floatGlow{
+ from{transform:translate(0,0) scale(1)}
+ to{transform:translate(90px,60px) scale(1.15)}
 }
 
 .grid{
-  position:absolute;
-  inset:0;
-  opacity:.05;
-  background-image:
-    linear-gradient(var(--text) 1px,transparent 1px),
-    linear-gradient(90deg,var(--text) 1px,transparent 1px);
-  background-size:45px 45px;
-  mask-image:linear-gradient(to bottom,black,transparent);
+ position:absolute;
+ inset:0;
+ opacity:.045;
+ background-image:
+ linear-gradient(var(--text) 1px,transparent 1px),
+ linear-gradient(90deg,var(--text) 1px,transparent 1px);
+ background-size:48px 48px;
+ mask-image:linear-gradient(to bottom,black,transparent);
 }
 
+.stars{
+ position:absolute;
+ inset:0;
+ opacity:.4;
+ background-image:
+ radial-gradient(2px 2px at 8% 20%,#fff,transparent),
+ radial-gradient(1px 1px at 18% 70%,#fff,transparent),
+ radial-gradient(2px 2px at 29% 35%,#fff,transparent),
+ radial-gradient(1px 1px at 42% 15%,#fff,transparent),
+ radial-gradient(2px 2px at 55% 80%,#fff,transparent),
+ radial-gradient(1px 1px at 67% 27%,#fff,transparent),
+ radial-gradient(2px 2px at 78% 65%,#fff,transparent),
+ radial-gradient(1px 1px at 90% 18%,#fff,transparent),
+ radial-gradient(2px 2px at 94% 82%,#fff,transparent);
+ animation:starsMove 18s linear infinite alternate;
+}
+
+@keyframes starsMove{
+ from{transform:translateY(0)}
+ to{transform:translateY(-35px)}
+}
+
+body::after{
+ content:"";
+ position:fixed;
+ inset:0;
+ pointer-events:none;
+ background:linear-gradient(
+  120deg,
+  transparent,
+  rgba(255,255,255,.015),
+  transparent
+ );
+ z-index:30;
+}
+
+/* ---------- HEADER ---------- */
+
 header{
-  position:sticky;
-  top:0;
-  z-index:20;
-  border-bottom:1px solid var(--border);
-  background:rgba(7,10,18,.62);
-  backdrop-filter:blur(22px);
+ position:sticky;
+ top:0;
+ z-index:20;
+ border-bottom:1px solid var(--line);
+ background:rgba(5,7,17,.58);
+ backdrop-filter:blur(24px);
 }
 
 body.light header{
-  background:rgba(238,242,248,.7);
+ background:rgba(237,241,248,.68);
 }
 
 .nav{
-  width:min(1050px,calc(100% - 30px));
-  height:70px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+ width:min(1050px,calc(100% - 28px));
+ height:72px;
+ margin:auto;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
 }
 
 .brand{
-  display:flex;
-  align-items:center;
-  gap:11px;
-  font-weight:800;
-  letter-spacing:.2px;
+ display:flex;
+ align-items:center;
+ gap:11px;
+ font-weight:800;
+ font-size:17px;
 }
 
 .logo{
-  width:42px;
-  height:42px;
-  display:grid;
-  place-items:center;
-  border-radius:14px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  box-shadow:0 12px 35px rgba(108,99,255,.3);
+ width:43px;
+ height:43px;
+ display:grid;
+ place-items:center;
+ border-radius:15px;
+ color:white;
+ background:linear-gradient(135deg,var(--accent),var(--accent2));
+ box-shadow:
+ 0 10px 35px rgba(116,103,255,.35),
+ inset 0 1px rgba(255,255,255,.35);
 }
 
-.actions{
-  display:flex;
-  gap:8px;
+.nav-buttons{
+ display:flex;
+ gap:8px;
 }
 
-.icon{
-  width:42px;
-  height:42px;
-  border-radius:13px;
-  border:1px solid var(--border);
-  background:var(--card);
-  color:var(--text);
+.icon-button{
+ width:43px;
+ height:43px;
+ border-radius:14px;
+ border:1px solid var(--line);
+ color:var(--text);
+ background:var(--card);
+ cursor:pointer;
+ transition:.2s;
 }
+
+.icon-button:hover{
+ transform:translateY(-2px);
+ border-color:rgba(116,103,255,.5);
+}
+
+/* ---------- MAIN ---------- */
 
 main{
-  width:min(900px,calc(100% - 24px));
-  margin:auto;
+ width:min(900px,calc(100% - 24px));
+ margin:auto;
 }
 
 .hero{
-  text-align:center;
-  padding:75px 0 30px;
+ text-align:center;
+ padding:75px 0 32px;
 }
 
-.status{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:8px 13px;
-  border-radius:30px;
-  border:1px solid var(--border);
-  background:var(--card);
-  color:var(--success);
-  font-size:13px;
-  backdrop-filter:blur(15px);
+.badge{
+ display:inline-flex;
+ align-items:center;
+ gap:8px;
+ padding:8px 14px;
+ border:1px solid var(--line);
+ border-radius:30px;
+ background:var(--card);
+ color:var(--success);
+ font-size:12px;
+ backdrop-filter:blur(15px);
+ box-shadow:0 8px 30px rgba(0,0,0,.12);
 }
 
-.dot{
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:var(--success);
-  box-shadow:0 0 14px var(--success);
+.badge-dot{
+ width:7px;
+ height:7px;
+ border-radius:50%;
+ background:var(--success);
+ box-shadow:0 0 14px var(--success);
 }
 
 h1{
-  font-size:clamp(40px,8vw,68px);
-  line-height:1;
-  letter-spacing:-3px;
-  margin:22px 0 15px;
+ margin:21px 0 14px;
+ font-size:clamp(42px,8vw,72px);
+ line-height:1;
+ letter-spacing:-3px;
 }
 
 .gradient{
-  background:linear-gradient(90deg,var(--accent2),#fff,var(--accent));
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
+ background:linear-gradient(
+  90deg,
+  var(--accent2),
+  #ffffff,
+  var(--accent)
+ );
+ -webkit-background-clip:text;
+ background-clip:text;
+ color:transparent;
 }
 
 .hero p{
-  color:var(--muted);
-  max-width:650px;
-  margin:auto;
-  line-height:1.8;
-  font-size:15px;
+ max-width:640px;
+ margin:auto;
+ color:var(--muted);
+ font-size:15px;
+ line-height:1.9;
 }
+
+/* ---------- PANEL ---------- */
 
 .panel{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:26px;
-  padding:24px;
-  backdrop-filter:blur(25px);
-  box-shadow:var(--shadow);
+ position:relative;
+ overflow:hidden;
+ padding:25px;
+ border-radius:28px;
+ border:1px solid var(--line);
+ background:var(--card);
+ backdrop-filter:blur(28px);
+ box-shadow:var(--shadow);
+ transition:.3s;
 }
 
-.form-row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
+.panel::before{
+ content:"";
+ position:absolute;
+ width:180px;
+ height:180px;
+ border-radius:50%;
+ background:var(--accent);
+ filter:blur(100px);
+ opacity:.08;
+ top:-100px;
+ right:-80px;
+ pointer-events:none;
+}
+
+.panel:hover{
+ transform:translateY(-3px);
+ border-color:rgba(116,103,255,.25);
+}
+
+.form-grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:14px;
 }
 
 .field{
-  margin-bottom:17px;
+ margin-bottom:17px;
 }
 
 label{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:8px;
-  font-size:13px;
-  color:var(--muted);
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:8px;
+ font-size:13px;
+ color:var(--muted);
 }
 
 .optional{
-  color:var(--accent2);
-  font-size:11px;
+ color:var(--accent2);
+ font-size:11px;
 }
 
 input,textarea{
-  width:100%;
-  border:1px solid var(--border);
-  outline:none;
-  color:var(--text);
-  background:rgba(0,0,0,.16);
-  border-radius:15px;
-  padding:14px 15px;
-  transition:.2s;
+ width:100%;
+ border:1px solid var(--line);
+ outline:none;
+ color:var(--text);
+ background:rgba(0,0,0,.17);
+ border-radius:15px;
+ padding:14px 15px;
+ transition:.25s;
 }
 
 body.light input,
 body.light textarea{
-  background:rgba(0,0,0,.035);
+ background:rgba(0,0,0,.035);
 }
 
-input:focus,textarea:focus{
-  border-color:var(--accent);
-  box-shadow:0 0 0 3px rgba(108,99,255,.12);
+input::placeholder,
+textarea::placeholder{
+ color:#68758d;
+}
+
+input:focus,
+textarea:focus{
+ border-color:var(--accent);
+ box-shadow:
+ 0 0 0 3px rgba(116,103,255,.12),
+ 0 8px 30px rgba(116,103,255,.08);
 }
 
 textarea{
-  min-height:230px;
-  resize:vertical;
-  line-height:1.7;
+ min-height:240px;
+ resize:vertical;
+ line-height:1.75;
 }
+
+/* ---------- COUNTER ---------- */
 
 .counter{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  padding:15px;
-  margin-top:4px;
-  border-radius:17px;
-  background:rgba(108,99,255,.08);
-  border:1px solid rgba(108,99,255,.15);
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:15px;
+ padding:15px;
+ border-radius:18px;
+ background:rgba(116,103,255,.07);
+ border:1px solid rgba(116,103,255,.14);
 }
 
-.counter-info{
-  display:flex;
-  align-items:center;
-  gap:12px;
+.counter-left{
+ display:flex;
+ align-items:center;
+ gap:12px;
 }
 
 .counter-icon{
-  width:43px;
-  height:43px;
-  display:grid;
-  place-items:center;
-  border-radius:13px;
-  background:rgba(108,99,255,.14);
+ width:44px;
+ height:44px;
+ display:grid;
+ place-items:center;
+ border-radius:14px;
+ background:rgba(116,103,255,.13);
+ font-size:20px;
 }
 
-.counter strong{
-  display:block;
-  font-size:18px;
+.counter-number{
+ font-size:20px;
+ font-weight:800;
+ display:block;
 }
 
-.counter small{
-  color:var(--muted);
+.counter-label{
+ color:var(--muted);
+ font-size:11px;
 }
 
 .counter-buttons{
-  display:flex;
-  gap:6px;
+ display:flex;
+ gap:7px;
 }
 
 .small-btn{
-  width:40px;
-  height:40px;
-  border-radius:12px;
-  border:1px solid var(--border);
-  background:var(--card);
-  color:var(--text);
-  font-size:18px;
+ width:41px;
+ height:41px;
+ border-radius:13px;
+ border:1px solid var(--line);
+ color:var(--text);
+ background:var(--card);
+ cursor:pointer;
+ font-size:19px;
+ transition:.2s;
 }
 
-.buttons{
-  display:flex;
-  gap:9px;
-  flex-wrap:wrap;
-  margin-top:18px;
+.small-btn:hover{
+ transform:translateY(-2px);
+ background:rgba(116,103,255,.15);
 }
 
-.primary,.secondary,.clear{
-  border-radius:14px;
-  padding:13px 18px;
-  border:1px solid var(--border);
-  transition:.2s;
+/* ---------- BUTTONS ---------- */
+
+.action-buttons{
+ display:flex;
+ flex-wrap:wrap;
+ gap:9px;
+ margin-top:18px;
+}
+
+.primary,
+.secondary,
+.clear{
+ position:relative;
+ overflow:hidden;
+ padding:13px 18px;
+ border-radius:14px;
+ border:1px solid var(--line);
+ cursor:pointer;
+ transition:.25s;
 }
 
 .primary{
-  color:white;
-  background:linear-gradient(135deg,var(--accent),#5148d8);
-  box-shadow:0 10px 25px rgba(108,99,255,.2);
+ color:white;
+ background:linear-gradient(135deg,var(--accent),#5147d8);
+ box-shadow:0 12px 30px rgba(116,103,255,.2);
+}
+
+.primary::after{
+ content:"";
+ position:absolute;
+ top:0;
+ left:-110%;
+ width:70%;
+ height:100%;
+ background:linear-gradient(
+  90deg,
+  transparent,
+  rgba(255,255,255,.32),
+  transparent
+ );
+ transform:skewX(-20deg);
+ animation:shine 3.5s infinite;
+}
+
+@keyframes shine{
+ 0%,45%{left:-110%}
+ 75%,100%{left:130%}
 }
 
 .secondary{
-  color:var(--text);
-  background:var(--card);
+ color:var(--text);
+ background:var(--card);
 }
 
 .clear{
-  color:#fff;
-  background:rgba(255,85,119,.12);
-  border-color:rgba(255,85,119,.2);
+ color:#ff7894;
+ background:rgba(255,85,119,.07);
+ border-color:rgba(255,85,119,.18);
 }
 
-.primary:hover,.secondary:hover,.clear:hover,.small-btn:hover{
-  transform:translateY(-2px);
+.primary:hover,
+.secondary:hover,
+.clear:hover{
+ transform:translateY(-3px);
+}
+
+.primary:active,
+.secondary:active,
+.clear:active{
+ transform:scale(.98);
 }
 
 .info{
-  margin-top:15px;
-  padding:13px 15px;
-  border-radius:14px;
-  background:rgba(0,212,255,.06);
-  border:1px solid rgba(0,212,255,.12);
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.7;
+ margin-top:15px;
+ padding:13px 15px;
+ border-radius:14px;
+ color:var(--muted);
+ font-size:12px;
+ line-height:1.7;
+ background:rgba(0,217,255,.045);
+ border:1px solid rgba(0,217,255,.1);
 }
 
+/* ---------- STATS ---------- */
+
 .stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  margin:15px 0 55px;
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:12px;
+ margin:15px 0 55px;
 }
 
 .stat{
-  text-align:center;
-  padding:17px;
-  border-radius:18px;
-  background:var(--card);
-  border:1px solid var(--border);
+ padding:17px 10px;
+ text-align:center;
+ border-radius:18px;
+ border:1px solid var(--line);
+ background:var(--card);
+ backdrop-filter:blur(18px);
 }
 
 .stat b{
-  display:block;
-  font-size:23px;
+ display:block;
+ font-size:22px;
+ margin-bottom:3px;
 }
 
 .stat span{
-  color:var(--muted);
-  font-size:12px;
+ color:var(--muted);
+ font-size:11px;
 }
+
+/* ---------- FOOTER ---------- */
 
 footer{
-  text-align:center;
-  color:var(--muted);
-  font-size:12px;
-  padding:30px 15px;
-  border-top:1px solid var(--border);
+ padding:30px 15px;
+ text-align:center;
+ color:var(--muted);
+ font-size:12px;
+ border-top:1px solid var(--line);
 }
 
+.footer-name{
+ color:var(--text);
+ font-weight:700;
+}
+
+/* ---------- TOAST ---------- */
+
 .toast{
-  position:fixed;
-  left:50%;
-  bottom:25px;
-  transform:translate(-50%,100px);
-  opacity:0;
-  padding:13px 18px;
-  background:#121827;
-  color:#fff;
-  border-radius:14px;
-  box-shadow:var(--shadow);
-  transition:.3s;
-  z-index:100;
+ position:fixed;
+ left:50%;
+ bottom:24px;
+ z-index:100;
+ transform:translate(-50%,120px);
+ opacity:0;
+ padding:13px 18px;
+ border-radius:14px;
+ background:#121827;
+ color:white;
+ box-shadow:0 20px 60px rgba(0,0,0,.4);
+ transition:.3s;
+ pointer-events:none;
 }
 
 .toast.show{
-  opacity:1;
-  transform:translate(-50%,0);
+ opacity:1;
+ transform:translate(-50%,0);
 }
+
+/* ---------- MOBILE ---------- */
 
 @media(max-width:650px){
-  .form-row{grid-template-columns:1fr}
-  .hero{padding-top:55px}
-  .panel{padding:17px}
-  .stats{grid-template-columns:1fr 1fr 1fr}
-  .buttons button{flex:1 1 100%}
+
+ .nav{
+  height:66px;
+ }
+
+ .brand{
+  font-size:15px;
+ }
+
+ .logo{
+  width:39px;
+  height:39px;
+ }
+
+ .hero{
+  padding:55px 0 28px;
+ }
+
+ h1{
+  letter-spacing:-2px;
+ }
+
+ .panel{
+  padding:17px;
+  border-radius:22px;
+ }
+
+ .form-grid{
+  grid-template-columns:1fr;
+  gap:0;
+ }
+
+ .action-buttons button{
+  flex:1 1 100%;
+ }
+
+ .stats{
+  gap:7px;
+ }
+
+ .stat{
+  padding:14px 5px;
+ }
+
+ .counter{
+  align-items:flex-start;
+ }
+
 }
 
-@media(max-width:400px){
-  .stats{gap:7px}
-  .stat{padding:13px 5px}
+@media(max-width:380px){
+
+ .counter{
+  flex-direction:column;
+ }
+
+ .counter-buttons{
+  width:100%;
+ }
+
+ .small-btn{
+  flex:1;
+ }
+}
+
+/* ---------- REDUCED MOTION ---------- */
+
+@media(prefers-reduced-motion:reduce){
+
+ *,
+ *::before,
+ *::after{
+  animation:none!important;
+  transition:none!important;
+ }
 }
 </style>
 </head>
@@ -429,314 +648,625 @@ footer{
 <body>
 
 <div class="background">
-  <div class="glow one"></div>
-  <div class="glow two"></div>
-  <div class="grid"></div>
+ <div class="glow one"></div>
+ <div class="glow two"></div>
+ <div class="grid"></div>
+ <div class="stars"></div>
 </div>
 
 <header>
-  <nav class="nav">
-    <div class="brand">
-      <div class="logo">✦</div>
-      <span>Support Center</span>
-    </div>
+ <nav class="nav">
 
-    <div class="actions">
-      <button class="icon" id="theme" title="تغيير المظهر">☀️</button>
-    </div>
-  </nav>
+  <div class="brand">
+   <div class="logo">✦</div>
+   <span>Support Center</span>
+  </div>
+
+  <div class="nav-buttons">
+   <button
+    class="icon-button"
+    id="themeButton"
+    title="تغيير المظهر">
+    ☀️
+   </button>
+  </div>
+
+ </nav>
 </header>
 
 <main>
 
 <section class="hero">
-  <div class="status">
-    <span class="dot"></span>
-    Support Interface
-  </div>
 
-  <h1>
-    مركز <span class="gradient">الدعم</span>
-  </h1>
+ <div class="badge">
+  <span class="badge-dot"></span>
+  Support Interface
+ </div>
 
-  <p>
-    واجهة بسيطة واحترافية لتجهيز نص البلاغ وحفظه ونسخه بسهولة.
-  </p>
+ <h1>
+  مركز
+  <span class="gradient">الدعم</span>
+ </h1>
+
+ <p>
+  جهّز بلاغك، انسخه أو افتح تطبيق البريد برسالة جاهزة للإرسال.
+ </p>
+
 </section>
 
 <section class="panel">
 
-  <div class="form-row">
+ <div class="form-grid">
 
-    <div class="field">
-      <label>
-        <span>إيميل الدعم</span>
-        <span class="optional">اختياري</span>
-      </label>
+  <div class="field">
 
-      <input
-        id="email"
-        type="email"
-        placeholder="example@domain.com"
-        autocomplete="email"
-      >
-    </div>
+   <label>
+    <span>إيميل الدعم</span>
+    <span class="optional">اختياري</span>
+   </label>
 
-    <div class="field">
-      <label>
-        <span>الموضوع</span>
-        <span class="optional">مطلوب</span>
-      </label>
-
-      <input
-        id="subject"
-        type="text"
-        placeholder="موضوع البلاغ"
-      >
-    </div>
+   <input
+    id="email"
+    type="email"
+    placeholder="support@example.com"
+    autocomplete="email"
+   >
 
   </div>
 
   <div class="field">
-    <label>
-      <span>نص البلاغ</span>
-      <span id="length">0 حرف</span>
-    </label>
 
-    <textarea
-      id="message"
-      placeholder="اكتب نص البلاغ هنا..."
-    ></textarea>
-  </div>
+   <label>
+    <span>الموضوع</span>
+    <span class="optional">اختياري</span>
+   </label>
 
-  <div class="counter">
-
-    <div class="counter-info">
-      <div class="counter-icon">📨</div>
-
-      <div>
-        <strong id="count">0</strong>
-        <small>بلاغات تم تسجيلها</small>
-      </div>
-    </div>
-
-    <div class="counter-buttons">
-      <button class="small-btn" id="minus">−</button>
-      <button class="small-btn" id="plus">+</button>
-    </div>
+   <input
+    id="subject"
+    type="text"
+    placeholder="موضوع البلاغ"
+   >
 
   </div>
 
-  <div class="buttons">
-    <button class="primary" id="copy">
-      📋 نسخ البلاغ
-    </button>
+ </div>
 
-    <button class="secondary" id="save">
-      💾 حفظ
-    </button>
+ <div class="field">
 
-    <button class="clear" id="clear">
-      🗑️ مسح
-    </button>
+  <label>
+   <span>نص البلاغ</span>
+   <span id="length">0 حرف</span>
+  </label>
+
+  <textarea
+   id="message"
+   placeholder="اكتب نص البلاغ هنا..."
+  ></textarea>
+
+ </div>
+
+ <div class="counter">
+
+  <div class="counter-left">
+
+   <div class="counter-icon">
+    📨
+   </div>
+
+   <div>
+    <span class="counter-number" id="reportCount">0</span>
+    <span class="counter-label">
+     عدد البلاغات المسجلة
+    </span>
+   </div>
+
   </div>
 
-  <div class="info">
-    🔒 البيانات يتم حفظها محليًا في متصفحك فقط، ولا يتم إرسالها إلى أي خادم من خلال هذه الصفحة.
+  <div class="counter-buttons">
+   <button class="small-btn" id="minus">−</button>
+   <button class="small-btn" id="plus">+</button>
   </div>
+
+ </div>
+
+ <div class="action-buttons">
+
+  <button class="primary" id="sendMail">
+   📧 فتح البريد وإرسال البلاغ
+  </button>
+
+  <button class="secondary" id="copy">
+   📋 نسخ البلاغ
+  </button>
+
+  <button class="secondary" id="save">
+   💾 حفظ
+  </button>
+
+  <button class="clear" id="clear">
+   🗑️ مسح
+  </button>
+
+ </div>
+
+ <div class="info">
+  🔒 البيانات تبقى في متصفحك. زر البريد يفتح تطبيق البريد لديك باستخدام
+  <b>mailto:</b> ولا يقوم الموقع بإرسال الرسالة تلقائيًا.
+ </div>
 
 </section>
 
 <section class="stats">
 
-  <div class="stat">
-    <b id="chars">0</b>
-    <span>الحروف</span>
-  </div>
+ <div class="stat">
+  <b id="chars">0</b>
+  <span>الحروف</span>
+ </div>
 
-  <div class="stat">
-    <b id="words">0</b>
-    <span>الكلمات</span>
-  </div>
+ <div class="stat">
+  <b id="words">0</b>
+  <span>الكلمات</span>
+ </div>
 
-  <div class="stat">
-    <b id="status">جاهز</b>
-    <span>الحالة</span>
-  </div>
+ <div class="stat">
+  <b id="state">جاهز</b>
+  <span>الحالة</span>
+ </div>
 
 </section>
 
 </main>
 
 <footer>
-  © 2026 علي رضا
-  <br>
-  Support Interface
+ <span class="footer-name">© 2026 علي رضا</span>
+ <br>
+ Support Center
 </footer>
 
 <div class="toast" id="toast"></div>
 
 <script>
-const email=document.getElementById("email");
-const subject=document.getElementById("subject");
-const message=document.getElementById("message");
 
-const countEl=document.getElementById("count");
-const lengthEl=document.getElementById("length");
-const charsEl=document.getElementById("chars");
-const wordsEl=document.getElementById("words");
-const statusEl=document.getElementById("status");
-const toast=document.getElementById("toast");
+/* ==============================
+   ELEMENTS
+============================== */
 
-let count=Number(localStorage.getItem("support_count")||0);
+const emailInput =
+ document.getElementById("email");
+
+const subjectInput =
+ document.getElementById("subject");
+
+const messageInput =
+ document.getElementById("message");
+
+const reportCount =
+ document.getElementById("reportCount");
+
+const lengthEl =
+ document.getElementById("length");
+
+const charsEl =
+ document.getElementById("chars");
+
+const wordsEl =
+ document.getElementById("words");
+
+const stateEl =
+ document.getElementById("state");
+
+const toast =
+ document.getElementById("toast");
+
+const themeButton =
+ document.getElementById("themeButton");
+
+
+/* ==============================
+   LOCAL STATE
+============================== */
+
+let count =
+ Number(localStorage.getItem("support_report_count") || 0);
+
+
+/* ==============================
+   TOAST
+============================== */
+
+let toastTimer;
 
 function showToast(text){
-  toast.textContent=text;
-  toast.classList.add("show");
 
-  setTimeout(()=>{
-    toast.classList.remove("show");
-  },2200);
+ clearTimeout(toastTimer);
+
+ toast.textContent=text;
+
+ toast.classList.add("show");
+
+ toastTimer=setTimeout(()=>{
+  toast.classList.remove("show");
+ },2300);
+
 }
 
-function updateCount(){
-  count=Math.max(0,count);
-  countEl.textContent=count;
-  localStorage.setItem("support_count",count);
+
+/* ==============================
+   COUNTER
+============================== */
+
+function updateCounter(){
+
+ count=Math.max(0,count);
+
+ reportCount.textContent=count;
+
+ localStorage.setItem(
+  "support_report_count",
+  String(count)
+ );
+
 }
 
-function updateText(){
-  const text=message.value;
 
-  const chars=text.length;
-  const words=text.trim()
-    ? text.trim().split(/\s+/).length
-    : 0;
+/* ==============================
+   TEXT STATS
+============================== */
 
-  lengthEl.textContent=chars+" حرف";
-  charsEl.textContent=chars;
-  wordsEl.textContent=words;
+function updateStats(){
 
-  statusEl.textContent=text.trim()
-    ?"جاهز"
-    :"بانتظار النص";
+ const text=messageInput.value;
+
+ const chars=text.length;
+
+ const words=text.trim()
+  ?text.trim().split(/\s+/).length
+  :0;
+
+ lengthEl.textContent=chars+" حرف";
+
+ charsEl.textContent=chars;
+
+ wordsEl.textContent=words;
+
+ stateEl.textContent=
+  text.trim()
+  ?"جاهز"
+  :"بانتظار النص";
+
 }
+
+
+/* ==============================
+   SAVE
+============================== */
 
 function saveData(){
-  const data={
-    email:email.value,
-    subject:subject.value,
-    message:message.value
-  };
 
-  localStorage.setItem("support_data",JSON.stringify(data));
-  showToast("تم حفظ البيانات ✓");
+ const data={
+  email:emailInput.value,
+  subject:subjectInput.value,
+  message:messageInput.value
+ };
+
+ localStorage.setItem(
+  "support_form_data",
+  JSON.stringify(data)
+ );
+
+ showToast("تم حفظ البيانات ✓");
+
 }
+
+
+/* ==============================
+   LOAD
+============================== */
 
 function loadData(){
-  try{
-    const data=JSON.parse(
-      localStorage.getItem("support_data")||"null"
-    );
 
-    if(!data)return;
+ try{
 
-    email.value=data.email||"";
-    subject.value=data.subject||"";
-    message.value=data.message||"";
-  }catch(e){}
+  const raw=
+   localStorage.getItem("support_form_data");
+
+  if(!raw)return;
+
+  const data=JSON.parse(raw);
+
+  emailInput.value=data.email||"";
+
+  subjectInput.value=data.subject||"";
+
+  messageInput.value=data.message||"";
+
+ }catch(error){
+
+  console.log(error);
+
+ }
+
 }
+
+
+/* ==============================
+   CLEAR
+============================== */
 
 function clearData(){
-  email.value="";
-  subject.value="";
-  message.value="";
 
-  localStorage.removeItem("support_data");
+ emailInput.value="";
+ subjectInput.value="";
+ messageInput.value="";
 
-  updateText();
-  showToast("تم مسح البيانات");
+ localStorage.removeItem("support_form_data");
+
+ updateStats();
+
+ showToast("تم مسح البيانات");
+
 }
+
+
+/* ==============================
+   BUILD EMAIL
+============================== */
+
+function buildMail(){
+
+ const recipient=
+  emailInput.value.trim();
+
+ const subject=
+  subjectInput.value.trim();
+
+ const message=
+  messageInput.value.trim();
+
+ if(!recipient){
+
+  showToast("أدخل إيميل الدعم أولاً");
+
+  emailInput.focus();
+
+  return null;
+
+ }
+
+ if(!subject && !message){
+
+  showToast("أدخل الموضوع أو نص البلاغ");
+
+  messageInput.focus();
+
+  return null;
+
+ }
+
+ const mailto=
+  "mailto:"+
+  encodeURIComponent(recipient)+
+  "?subject="+
+  encodeURIComponent(subject)+
+  "&body="+
+  encodeURIComponent(message);
+
+ return mailto;
+
+}
+
+
+/* ==============================
+   OPEN EMAIL
+============================== */
+
+function sendMail(){
+
+ const mailto=buildMail();
+
+ if(!mailto)return;
+
+ count++;
+
+ updateCounter();
+
+ window.location.href=mailto;
+
+}
+
+
+/* ==============================
+   COPY
+============================== */
 
 async function copyReport(){
 
-  const e=email.value.trim();
-  const s=subject.value.trim();
-  const m=message.value.trim();
+ const recipient=
+  emailInput.value.trim();
 
-  if(!s && !m){
-    showToast("أدخل الموضوع أو نص البلاغ أولًا");
-    return;
-  }
+ const subject=
+  subjectInput.value.trim();
 
-  let output="";
+ const message=
+  messageInput.value.trim();
 
-  if(e){
-    output+="Email: "+e+"\n";
-  }
+ if(!subject && !message){
 
-  if(s){
-    output+="Subject: "+s+"\n";
-  }
+  showToast("أدخل بيانات البلاغ أولاً");
 
-  output+="\n"+m;
+  return;
 
-  try{
-    await navigator.clipboard.writeText(output);
+ }
 
-    count++;
-    updateCount();
+ let text="";
 
-    showToast("تم نسخ البلاغ وتسجيله ✓");
-  }catch(err){
-    showToast("تعذر النسخ من المتصفح");
-  }
+ if(recipient){
+
+  text+="إيميل الدعم: "+
+   recipient+
+   "\n\n";
+
+ }
+
+ if(subject){
+
+  text+="الموضوع: "+
+   subject+
+   "\n\n";
+
+ }
+
+ text+=message;
+
+ try{
+
+  await navigator.clipboard.writeText(text);
+
+  showToast("تم نسخ البلاغ ✓");
+
+ }catch(error){
+
+  const area=document.createElement("textarea");
+
+  area.value=text;
+
+  document.body.appendChild(area);
+
+  area.select();
+
+  document.execCommand("copy");
+
+  area.remove();
+
+  showToast("تم نسخ البلاغ ✓");
+
+ }
+
 }
 
-document.getElementById("plus").onclick=()=>{
+
+/* ==============================
+   EVENTS
+============================== */
+
+document
+ .getElementById("sendMail")
+ .addEventListener("click",sendMail);
+
+document
+ .getElementById("copy")
+ .addEventListener("click",copyReport);
+
+document
+ .getElementById("save")
+ .addEventListener("click",saveData);
+
+document
+ .getElementById("clear")
+ .addEventListener("click",clearData);
+
+
+document
+ .getElementById("plus")
+ .addEventListener("click",()=>{
+
   count++;
-  updateCount();
+
+  updateCounter();
+
   showToast("تمت إضافة بلاغ");
-};
 
-document.getElementById("minus").onclick=()=>{
-  if(count>0)count--;
-  updateCount();
-};
+ });
 
-document.getElementById("copy").onclick=copyReport;
-document.getElementById("save").onclick=saveData;
-document.getElementById("clear").onclick=clearData;
 
-message.addEventListener("input",updateText);
-subject.addEventListener("input",updateText);
+document
+ .getElementById("minus")
+ .addEventListener("click",()=>{
 
-const theme=document.getElementById("theme");
+  if(count>0){
+
+   count--;
+
+   updateCounter();
+
+  }
+
+ });
+
+
+messageInput.addEventListener(
+ "input",
+ updateStats
+);
+
+subjectInput.addEventListener(
+ "input",
+ updateStats
+);
+
+
+/* ==============================
+   THEME
+============================== */
 
 function setTheme(mode){
-  if(mode==="light"){
-    document.body.classList.add("light");
-    theme.textContent="🌙";
-  }else{
-    document.body.classList.remove("light");
-    theme.textContent="☀️";
-  }
 
-  localStorage.setItem("support_theme",mode);
+ if(mode==="light"){
+
+  document.body.classList.add("light");
+
+  themeButton.textContent="🌙";
+
+ }else{
+
+  document.body.classList.remove("light");
+
+  themeButton.textContent="☀️";
+
+ }
+
+ localStorage.setItem(
+  "support_theme",
+  mode
+ );
+
 }
 
-theme.onclick=()=>{
-  const light=document.body.classList.contains("light");
-  setTheme(light?"dark":"light");
-};
 
-const savedTheme=localStorage.getItem("support_theme")||"dark";
+themeButton.addEventListener(
+ "click",
+ ()=>{
+
+  const light=
+   document.body.classList.contains("light");
+
+  setTheme(
+   light
+   ?"dark"
+   :"light"
+  );
+
+ }
+);
+
+
+/* ==============================
+   INIT
+============================== */
+
+const savedTheme=
+ localStorage.getItem("support_theme")
+ ||"dark";
+
 setTheme(savedTheme);
 
 loadData();
-updateCount();
-updateText();
+
+updateCounter();
+
+updateStats();
+
 </script>
 
 </body>
-     </html>
+  </html>
