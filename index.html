@@ -2,504 +2,1355 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b1220">
-<meta name="description" content="Telegram Report Center">
-<title>Telegram Report Center</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#0b1020">
+<title>Telegram Toolkit</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+:root{
+ --bg:#070b14;
+ --panel:rgba(17,24,39,.72);
+ --panel2:rgba(25,34,55,.75);
+ --text:#f5f7ff;
+ --muted:#9ca8bd;
+ --line:rgba(255,255,255,.09);
+ --accent:#6c63ff;
+ --accent2:#00d4ff;
+ --danger:#ff5577;
+ --success:#35d07f;
+ --shadow:0 20px 60px rgba(0,0,0,.35);
 }
 
-html {
-    scroll-behavior: smooth;
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+ margin:0;
+ min-height:100vh;
+ font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ color:var(--text);
+ background:
+ radial-gradient(circle at 15% 10%,rgba(108,99,255,.18),transparent 30%),
+ radial-gradient(circle at 85% 20%,rgba(0,212,255,.12),transparent 30%),
+ var(--bg);
+ overflow-x:hidden;
 }
 
-body {
-    min-height: 100vh;
-    font-family: Arial, "Segoe UI", Tahoma, sans-serif;
-    background: radial-gradient(circle at top, #16253d 0%, #0b1220 45%, #070c15 100%);
-    color: #fff;
-    padding: 70px 16px 40px;
+body.light{
+ --bg:#eef2f8;
+ --panel:rgba(255,255,255,.76);
+ --panel2:rgba(255,255,255,.9);
+ --text:#111827;
+ --muted:#637083;
+ --line:rgba(0,0,0,.09);
 }
 
-/* الحقوق أعلى الصفحة */
-.copyright-top {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    height: 50px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(7, 12, 21, 0.92);
-    backdrop-filter: blur(12px);
-
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-
-    color: #8bd8ff;
-    font-size: 14px;
-    font-weight: bold;
-
-    z-index: 9999;
+button,input,textarea,select{
+ font:inherit;
 }
 
-/* الحاوية */
-.container {
-    width: 100%;
-    max-width: 680px;
-    margin: 0 auto;
-
-    background: rgba(20, 31, 51, 0.94);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 22px;
-
-    padding: 28px 22px;
-
-    box-shadow: 0 25px 70px rgba(0,0,0,0.45);
-    backdrop-filter: blur(14px);
+button{
+ cursor:pointer;
+ border:0;
 }
 
-/* الشعار */
-.logo {
-    width: 64px;
-    height: 64px;
-    margin: 0 auto 15px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: linear-gradient(135deg, #229ed9, #1677a7);
-
-    font-size: 30px;
-
-    box-shadow: 0 8px 30px rgba(34,158,217,0.3);
+.bg{
+ position:fixed;
+ inset:0;
+ pointer-events:none;
+ overflow:hidden;
+ z-index:-1;
 }
 
-h1 {
-    text-align: center;
-    font-size: 27px;
-    margin-bottom: 9px;
+.orb{
+ position:absolute;
+ width:420px;
+ height:420px;
+ border-radius:50%;
+ filter:blur(90px);
+ opacity:.15;
+ background:var(--accent);
+ animation:float 12s ease-in-out infinite alternate;
 }
 
-.subtitle {
-    text-align: center;
-    color: #9eabc0;
-    font-size: 14px;
-    line-height: 1.8;
-    margin-bottom: 28px;
+.orb.one{top:-180px;left:-100px}
+.orb.two{right:-180px;top:35%;background:var(--accent2);animation-delay:2s}
+
+@keyframes float{
+ to{transform:translate(80px,50px) scale(1.15)}
 }
 
-/* الحقول */
-.field {
-    margin-bottom: 20px;
+.rain{
+ position:absolute;
+ inset:0;
+ opacity:.11;
+ background-image:linear-gradient(115deg,transparent 45%,rgba(255,255,255,.5) 50%,transparent 55%);
+ background-size:35px 35px;
+ animation:rain 1s linear infinite;
 }
 
-label {
-    display: block;
-    margin-bottom: 8px;
-
-    font-size: 15px;
-    font-weight: bold;
-
-    color: #e7edf7;
+@keyframes rain{
+ to{background-position:0 35px}
 }
 
-.optional {
-    color: #7f8ca3;
-    font-size: 12px;
-    font-weight: normal;
+header{
+ position:sticky;
+ top:0;
+ z-index:20;
+ backdrop-filter:blur(20px);
+ background:rgba(7,11,20,.65);
+ border-bottom:1px solid var(--line);
 }
 
-input,
-textarea {
-    width: 100%;
-
-    border: 1px solid #34445d;
-    border-radius: 12px;
-
-    background: #0b1424;
-    color: #fff;
-
-    padding: 14px;
-
-    font-family: inherit;
-    font-size: 15px;
-
-    outline: none;
-
-    transition: border-color .2s, box-shadow .2s;
+body.light header{
+ background:rgba(238,242,248,.72);
 }
 
-input {
-    height: 50px;
+.nav{
+ max-width:1250px;
+ margin:auto;
+ height:70px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:0 20px;
+ gap:15px;
 }
 
-textarea {
-    min-height: 230px;
-    resize: vertical;
-    line-height: 1.75;
+.brand{
+ display:flex;
+ align-items:center;
+ gap:11px;
+ font-weight:800;
+ font-size:19px;
 }
 
-input::placeholder,
-textarea::placeholder {
-    color: #68768d;
+.logo{
+ width:40px;
+ height:40px;
+ border-radius:13px;
+ display:grid;
+ place-items:center;
+ background:linear-gradient(135deg,var(--accent),var(--accent2));
+ box-shadow:0 10px 30px rgba(108,99,255,.3);
 }
 
-input:focus,
-textarea:focus {
-    border-color: #229ed9;
-    box-shadow: 0 0 0 3px rgba(34,158,217,0.12);
+.nav-actions{
+ display:flex;
+ gap:8px;
 }
 
-/* زر الإرسال */
-.send-button {
-    width: 100%;
-    min-height: 54px;
-
-    border: none;
-    border-radius: 13px;
-
-    background: linear-gradient(135deg, #229ed9, #168ac0);
-
-    color: #fff;
-
-    font-family: inherit;
-    font-size: 16px;
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition: transform .15s, box-shadow .15s;
-
-    box-shadow: 0 8px 25px rgba(34,158,217,0.2);
+.icon-btn{
+ width:42px;
+ height:42px;
+ border-radius:12px;
+ background:var(--panel);
+ border:1px solid var(--line);
+ color:var(--text);
 }
 
-.send-button:hover {
-    box-shadow: 0 10px 30px rgba(34,158,217,0.3);
+.container{
+ width:min(1250px,calc(100% - 30px));
+ margin:auto;
 }
 
-.send-button:active {
-    transform: scale(.98);
+.hero{
+ padding:75px 0 35px;
+ text-align:center;
 }
 
-/* الملاحظة */
-.info-box {
-    margin-top: 18px;
-
-    padding: 13px 14px;
-
-    border-radius: 11px;
-
-    background: rgba(34,158,217,0.07);
-
-    border: 1px solid rgba(34,158,217,0.15);
-
-    color: #9caac0;
-
-    font-size: 12px;
-    line-height: 1.7;
-
-    text-align: center;
+.badge{
+ display:inline-flex;
+ padding:8px 13px;
+ border-radius:30px;
+ background:var(--panel);
+ border:1px solid var(--line);
+ color:var(--accent2);
+ font-size:13px;
 }
 
-/* الحالة */
-#status {
-    display: none;
-
-    margin-top: 16px;
-    padding: 12px;
-
-    border-radius: 10px;
-
-    text-align: center;
-
-    background: rgba(34,158,217,0.10);
-
-    color: #8bd8ff;
-
-    font-size: 13px;
-    line-height: 1.6;
+.hero h1{
+ margin:20px auto 12px;
+ font-size:clamp(38px,7vw,76px);
+ line-height:1;
+ letter-spacing:-3px;
+ max-width:900px;
 }
 
-/* الحقوق أسفل الموقع */
-.copyright-bottom {
-    max-width: 680px;
-    margin: 25px auto 0;
-
-    padding: 18px 10px;
-
-    text-align: center;
-
-    border-top: 1px solid rgba(255,255,255,0.07);
-
-    color: #65738a;
-
-    font-size: 12px;
-    line-height: 1.7;
+.gradient{
+ background:linear-gradient(90deg,var(--accent2),#fff,var(--accent));
+ -webkit-background-clip:text;
+ background-clip:text;
+ color:transparent;
 }
 
-/* الهاتف */
-@media (max-width: 480px) {
-    body {
-        padding: 65px 11px 30px;
-    }
+.hero p{
+ color:var(--muted);
+ max-width:720px;
+ margin:auto;
+ font-size:17px;
+ line-height:1.8;
+}
 
-    .container {
-        padding: 24px 16px;
-        border-radius: 18px;
-    }
+.search-wrap{
+ max-width:760px;
+ margin:30px auto;
+ position:relative;
+}
 
-    h1 {
-        font-size: 23px;
-    }
+.search{
+ width:100%;
+ height:58px;
+ border-radius:18px;
+ border:1px solid var(--line);
+ outline:none;
+ background:var(--panel);
+ color:var(--text);
+ padding:0 52px 0 20px;
+ backdrop-filter:blur(20px);
+ box-shadow:var(--shadow);
+}
 
-    .subtitle {
-        font-size: 13px;
-    }
+.search-icon{
+ position:absolute;
+ right:18px;
+ top:17px;
+ color:var(--muted);
+}
 
-    textarea {
-        min-height: 210px;
-    }
+.stats{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:12px;
+ margin:25px 0 35px;
+}
+
+.stat{
+ background:var(--panel);
+ border:1px solid var(--line);
+ border-radius:18px;
+ padding:18px;
+ backdrop-filter:blur(20px);
+}
+
+.stat b{
+ display:block;
+ font-size:25px;
+ margin-bottom:5px;
+}
+
+.stat span{
+ color:var(--muted);
+ font-size:13px;
+}
+
+.toolbar{
+ display:flex;
+ gap:8px;
+ flex-wrap:wrap;
+ margin-bottom:20px;
+}
+
+.filter{
+ padding:10px 15px;
+ border-radius:12px;
+ background:var(--panel);
+ border:1px solid var(--line);
+ color:var(--muted);
+}
+
+.filter.active{
+ color:#fff;
+ background:linear-gradient(135deg,var(--accent),#5148d8);
+}
+
+.tools{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:15px;
+ padding-bottom:50px;
+}
+
+.tool{
+ background:var(--panel);
+ border:1px solid var(--line);
+ border-radius:22px;
+ padding:20px;
+ transition:.25s;
+ backdrop-filter:blur(20px);
+ position:relative;
+ overflow:hidden;
+}
+
+.tool:hover{
+ transform:translateY(-5px);
+ border-color:rgba(108,99,255,.45);
+ box-shadow:var(--shadow);
+}
+
+.tool-top{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:10px;
+}
+
+.tool-icon{
+ width:47px;
+ height:47px;
+ border-radius:14px;
+ display:grid;
+ place-items:center;
+ font-size:22px;
+ background:rgba(108,99,255,.13);
+}
+
+.star{
+ background:none;
+ color:#657089;
+ font-size:20px;
+}
+
+.star.active{color:#ffd34d}
+
+.tool h3{
+ margin:18px 0 7px;
+ font-size:18px;
+}
+
+.tool p{
+ margin:0;
+ color:var(--muted);
+ font-size:13px;
+ line-height:1.7;
+ min-height:45px;
+}
+
+.open{
+ width:100%;
+ margin-top:17px;
+ padding:12px;
+ border-radius:12px;
+ background:rgba(255,255,255,.06);
+ color:var(--text);
+ border:1px solid var(--line);
+}
+
+.open:hover{
+ background:var(--accent);
+ color:white;
+}
+
+footer{
+ border-top:1px solid var(--line);
+ padding:30px 0;
+ color:var(--muted);
+ text-align:center;
+ font-size:13px;
+}
+
+.modal{
+ position:fixed;
+ inset:0;
+ background:rgba(0,0,0,.65);
+ backdrop-filter:blur(8px);
+ display:none;
+ align-items:center;
+ justify-content:center;
+ padding:15px;
+ z-index:50;
+}
+
+.modal.show{display:flex}
+
+.modal-box{
+ width:min(720px,100%);
+ max-height:90vh;
+ overflow:auto;
+ background:var(--panel2);
+ border:1px solid var(--line);
+ border-radius:24px;
+ box-shadow:0 30px 100px rgba(0,0,0,.5);
+ padding:24px;
+}
+
+.modal-head{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:15px;
+ margin-bottom:20px;
+}
+
+.modal-head h2{margin:0}
+
+.close{
+ width:40px;
+ height:40px;
+ border-radius:12px;
+ background:var(--panel);
+ color:var(--text);
+ border:1px solid var(--line);
+}
+
+.field{
+ margin:12px 0;
+}
+
+.field label{
+ display:block;
+ margin-bottom:7px;
+ font-size:13px;
+ color:var(--muted);
+}
+
+textarea,
+.modal input,
+.modal select{
+ width:100%;
+ border:1px solid var(--line);
+ background:rgba(0,0,0,.18);
+ color:var(--text);
+ border-radius:13px;
+ padding:13px;
+ outline:none;
+}
+
+textarea{
+ min-height:150px;
+ resize:vertical;
+}
+
+.result{
+ margin-top:12px;
+ padding:14px;
+ background:rgba(0,0,0,.2);
+ border:1px solid var(--line);
+ border-radius:13px;
+ white-space:pre-wrap;
+ word-break:break-word;
+ color:var(--text);
+}
+
+.actions{
+ display:flex;
+ flex-wrap:wrap;
+ gap:8px;
+ margin-top:12px;
+}
+
+.primary{
+ padding:11px 17px;
+ border-radius:12px;
+ background:linear-gradient(135deg,var(--accent),#5148d8);
+ color:#fff;
+}
+
+.secondary{
+ padding:11px 17px;
+ border-radius:12px;
+ background:var(--panel);
+ border:1px solid var(--line);
+ color:var(--text);
+}
+
+.toast{
+ position:fixed;
+ bottom:20px;
+ left:50%;
+ transform:translateX(-50%) translateY(100px);
+ background:#111827;
+ color:white;
+ padding:13px 18px;
+ border-radius:13px;
+ opacity:0;
+ transition:.3s;
+ z-index:100;
+ box-shadow:var(--shadow);
+}
+
+.toast.show{
+ opacity:1;
+ transform:translateX(-50%) translateY(0);
+}
+
+.palette{
+ position:fixed;
+ inset:0;
+ background:rgba(0,0,0,.6);
+ backdrop-filter:blur(8px);
+ display:none;
+ align-items:flex-start;
+ justify-content:center;
+ padding-top:12vh;
+ z-index:80;
+}
+
+.palette.show{display:flex}
+
+.palette-box{
+ width:min(650px,calc(100% - 25px));
+ background:var(--panel2);
+ border:1px solid var(--line);
+ border-radius:20px;
+ overflow:hidden;
+}
+
+.palette input{
+ width:100%;
+ padding:18px;
+ border:0;
+ outline:0;
+ background:transparent;
+ color:var(--text);
+ border-bottom:1px solid var(--line);
+}
+
+.palette-item{
+ padding:15px 18px;
+ cursor:pointer;
+}
+
+.palette-item:hover{
+ background:rgba(108,99,255,.12);
+}
+
+.empty{
+ grid-column:1/-1;
+ text-align:center;
+ padding:50px;
+ color:var(--muted);
+}
+
+@media(max-width:900px){
+ .tools{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:600px){
+ .nav{padding:0 12px}
+ .hero{padding-top:50px}
+ .hero h1{letter-spacing:-2px}
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .tools{grid-template-columns:1fr}
+ .container{width:min(100% - 20px,1250px)}
 }
 </style>
 </head>
 
 <body>
 
-<!-- الحقوق أعلى الموقع -->
-<div class="copyright-top">
-    © علي رضا الساطي
+<div class="bg">
+ <div class="orb one"></div>
+ <div class="orb two"></div>
+ <div class="rain"></div>
 </div>
 
-<!-- المحتوى -->
+<header>
+ <nav class="nav">
+  <div class="brand">
+   <div class="logo">✦</div>
+   <span>Telegram Toolkit</span>
+  </div>
+
+  <div class="nav-actions">
+   <button class="icon-btn" id="paletteBtn" title="البحث السريع">⌘</button>
+   <button class="icon-btn" id="themeBtn" title="الوضع">☀️</button>
+  </div>
+ </nav>
+</header>
+
 <main class="container">
 
-    <div class="logo">
-        ✈️
-    </div>
+<section class="hero">
+ <span class="badge">⚡ Developer Utility Platform</span>
 
-    <h1>
-        Telegram Report Center
-    </h1>
+ <h1>
+  أدواتك الرقمية
+  <span class="gradient">في مكان واحد</span>
+ </h1>
 
-    <p class="subtitle">
-        نموذج لإعداد بلاغات المخالفات وإرسالها عبر البريد الإلكتروني.
-    </p>
+ <p>
+  مجموعة أدوات عملية للمطورين ومستخدمي Telegram والويب.
+  تعمل مباشرة داخل المتصفح بدون الحاجة إلى تثبيت برامج.
+ </p>
 
-    <form id="reportForm">
+ <div class="search-wrap">
+  <span class="search-icon">⌕</span>
+  <input id="search" class="search" placeholder="ابحث عن أداة...">
+ </div>
+</section>
 
-        <!-- بريد الدعم -->
-        <div class="field">
+<section class="stats">
+ <div class="stat">
+  <b id="toolCount">0</b>
+  <span>أداة متاحة</span>
+ </div>
+ <div class="stat">
+  <b id="favoriteCount">0</b>
+  <span>المفضلة</span>
+ </div>
+ <div class="stat">
+  <b id="usageCount">0</b>
+  <span>الاستخدامات</span>
+ </div>
+ <div class="stat">
+  <b id="connection">Online</b>
+  <span>حالة الاتصال</span>
+ </div>
+</section>
 
-            <label for="email">
-                بريد الدعم
-                <span class="optional">(اختياري)</span>
-            </label>
+<div class="toolbar">
+ <button class="filter active" data-cat="all">الكل</button>
+ <button class="filter" data-cat="telegram">Telegram</button>
+ <button class="filter" data-cat="developer">Developer</button>
+ <button class="filter" data-cat="text">Text</button>
+ <button class="filter" data-cat="security">Security</button>
+ <button class="filter" data-cat="utility">Utility</button>
+</div>
 
-            <input
-                type="email"
-                id="email"
-                autocomplete="email"
-                placeholder="support@example.com"
-            >
-
-        </div>
-
-        <!-- الموضوع -->
-        <div class="field">
-
-            <label for="subject">
-                الموضوع
-            </label>
-
-            <input
-                type="text"
-                id="subject"
-                maxlength="200"
-                placeholder="اكتب موضوع البلاغ"
-                required
-            >
-
-        </div>
-
-        <!-- نص البلاغ -->
-        <div class="field">
-
-            <label for="message">
-                نص البلاغ
-            </label>
-
-            <textarea
-                id="message"
-                maxlength="10000"
-                placeholder="اكتب تفاصيل البلاغ هنا..."
-                required
-            ></textarea>
-
-        </div>
-
-        <!-- زر الإرسال -->
-        <button
-            type="submit"
-            class="send-button"
-            id="sendButton">
-
-            ✉️ تجهيز البلاغ وإرسال البريد
-
-        </button>
-
-    </form>
-
-    <div class="info-box">
-
-        عند الضغط على الزر سيتم فتح تطبيق البريد في جهازك
-        مع تجهيز المستلم والموضوع ونص البلاغ.
-        راجع المعلومات ثم اضغط «إرسال» بنفسك.
-
-    </div>
-
-    <div id="status"></div>
+<section class="tools" id="tools"></section>
 
 </main>
 
-<!-- الحقوق أسفل الموقع -->
-<footer class="copyright-bottom">
-
-    © 2026 علي رضا الساطي
-    <br>
-    Telegram Report Center
-
+<footer>
+ Telegram Toolkit · أدوات تعمل محليًا داخل المتصفح
+ <br>
+ © 2026 Ali Reda Al-Sati
 </footer>
 
+<div class="modal" id="modal">
+ <div class="modal-box">
+  <div class="modal-head">
+   <h2 id="modalTitle"></h2>
+   <button class="close" id="closeModal">×</button>
+  </div>
+  <div id="modalContent"></div>
+ </div>
+</div>
+
+<div class="palette" id="palette">
+ <div class="palette-box">
+  <input id="paletteInput" placeholder="ابحث عن أداة...">
+  <div id="paletteItems"></div>
+ </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
 <script>
+const tools=[
+ {
+  id:"telegram-link",
+  cat:"telegram",
+  icon:"✈️",
+  title:"Telegram Link Builder",
+  desc:"إنشاء روابط Telegram للمستخدمين والبوتات والقنوات.",
+  type:"telegram"
+ },
+ {
+  id:"deep-link",
+  cat:"telegram",
+  icon:"🔗",
+  title:"Bot Deep Link",
+  desc:"إنشاء روابط start للبوتات مع Parameter.",
+  type:"deep"
+ },
+ {
+  id:"keyboard",
+  cat:"telegram",
+  icon:"⌨️",
+  title:"Inline Keyboard Builder",
+  desc:"إنشاء Inline Keyboard بصيغة JSON جاهزة.",
+  type:"keyboard"
+ },
+ {
+  id:"json",
+  cat:"developer",
+  icon:"{ }",
+  title:"JSON Formatter",
+  desc:"تنسيق وتصغير والتحقق من JSON.",
+  type:"json"
+ },
+ {
+  id:"base64",
+  cat:"security",
+  icon:"🔐",
+  title:"Base64",
+  desc:"تشفير وفك تشفير Base64 للنصوص.",
+  type:"base64"
+ },
+ {
+  id:"hash",
+  cat:"security",
+  icon:"#",
+  title:"SHA Hash",
+  desc:"حساب SHA-256 و SHA-384 و SHA-512 محليًا.",
+  type:"hash"
+ },
+ {
+  id:"uuid",
+  cat:"developer",
+  icon:"🆔",
+  title:"UUID Generator",
+  desc:"إنشاء UUID عشوائي.",
+  type:"uuid"
+ },
+ {
+  id:"timestamp",
+  cat:"utility",
+  icon:"🕒",
+  title:"Timestamp Converter",
+  desc:"تحويل Unix Timestamp إلى تاريخ والعكس.",
+  type:"timestamp"
+ },
+ {
+  id:"text",
+  cat:"text",
+  icon:"Aa",
+  title:"Text Tools",
+  desc:"عداد الكلمات والحروف وتحويل حالة النص وتنظيفه.",
+  type:"text"
+ },
+ {
+  id:"url",
+  cat:"developer",
+  icon:"🌐",
+  title:"URL Encoder",
+  desc:"ترميز وفك ترميز الروابط والنصوص.",
+  type:"url"
+ },
+ {
+  id:"regex",
+  cat:"developer",
+  icon:".*",
+  title:"Regex Tester",
+  desc:"اختبار Regular Expressions مباشرة.",
+  type:"regex"
+ },
+ {
+  id:"calculator",
+  cat:"utility",
+  icon:"🧮",
+  title:"Developer Calculator",
+  desc:"حاسبة بسيطة للمطورين والأرقام.",
+  type:"calculator"
+ },
+ {
+  id:"color",
+  cat:"utility",
+  icon:"🎨",
+  title:"Color Converter",
+  desc:"تحويل HEX إلى RGB والعكس.",
+  type:"color"
+ },
+ {
+  id:"random",
+  cat:"security",
+  icon:"🎲",
+  title:"Random Generator",
+  desc:"إنشاء نصوص عشوائية آمنة للاستخدامات العامة.",
+  type:"random"
+ },
+ {
+  id:"device",
+  cat:"utility",
+  icon:"📱",
+  title:"Device Info",
+  desc:"عرض معلومات المتصفح والشاشة والمنصة.",
+  type:"device"
+ }
+];
 
-/* استعادة البيانات عند الرجوع للموقع */
-function restoreForm() {
+let state=JSON.parse(localStorage.getItem("tk_state")||"{}");
 
-    const savedEmail =
-        sessionStorage.getItem("report_email");
+state.favorites=state.favorites||[];
+state.usage=state.usage||0;
+state.history=state.history||[];
 
-    const savedSubject =
-        sessionStorage.getItem("report_subject");
+const toolsEl=document.getElementById("tools");
+const searchEl=document.getElementById("search");
+const modal=document.getElementById("modal");
+const modalTitle=document.getElementById("modalTitle");
+const modalContent=document.getElementById("modalContent");
+const toast=document.getElementById("toast");
 
-    const savedMessage =
-        sessionStorage.getItem("report_message");
-
-    if (savedEmail !== null) {
-        document.getElementById("email").value = savedEmail;
-    }
-
-    if (savedSubject !== null) {
-        document.getElementById("subject").value = savedSubject;
-    }
-
-    if (savedMessage !== null) {
-        document.getElementById("message").value = savedMessage;
-    }
+function save(){
+ localStorage.setItem("tk_state",JSON.stringify(state));
+ updateStats();
 }
 
+function updateStats(){
+ document.getElementById("toolCount").textContent=tools.length;
+ document.getElementById("favoriteCount").textContent=state.favorites.length;
+ document.getElementById("usageCount").textContent=state.usage;
+}
 
-/* تجهيز البريد */
-document
-.getElementById("reportForm")
-.addEventListener("submit", function(event) {
+function showToast(msg){
+ toast.textContent=msg;
+ toast.classList.add("show");
+ setTimeout(()=>toast.classList.remove("show"),2200);
+}
 
-    event.preventDefault();
+function render(list=tools){
+ toolsEl.innerHTML="";
 
-    const email =
-        document.getElementById("email")
-        .value
-        .trim();
+ if(!list.length){
+  toolsEl.innerHTML='<div class="empty">لا توجد أدوات مطابقة للبحث.</div>';
+  return;
+ }
 
-    const subject =
-        document.getElementById("subject")
-        .value
-        .trim();
+ list.forEach(t=>{
+  const fav=state.favorites.includes(t.id);
 
-    const message =
-        document.getElementById("message")
-        .value
-        .trim();
+  const card=document.createElement("article");
+  card.className="tool";
 
-    /* التحقق */
-    if (!subject || !message) {
+  card.innerHTML=`
+   <div class="tool-top">
+    <div class="tool-icon">${t.icon}</div>
+    <button class="star ${fav?"active":""}" data-fav="${t.id}">
+     ${fav?"★":"☆"}
+    </button>
+   </div>
 
-        alert("يرجى كتابة الموضوع ونص البلاغ.");
+   <h3>${t.title}</h3>
+   <p>${t.desc}</p>
 
-        return;
-    }
+   <button class="open" data-open="${t.id}">
+    فتح الأداة →
+   </button>
+  `;
 
-    /* حفظ البيانات */
-    sessionStorage.setItem(
-        "report_email",
-        email
-    );
+  toolsEl.appendChild(card);
+ });
 
-    sessionStorage.setItem(
-        "report_subject",
-        subject
-    );
+ document.querySelectorAll("[data-fav]").forEach(btn=>{
+  btn.onclick=()=>{
+   const id=btn.dataset.fav;
 
-    sessionStorage.setItem(
-        "report_message",
-        message
-    );
+   if(state.favorites.includes(id)){
+    state.favorites=state.favorites.filter(x=>x!==id);
+   }else{
+    state.favorites.push(id);
+   }
 
-    /* إنشاء رابط البريد */
-    let mailto = "mailto:";
+   save();
+   render(currentList());
+  };
+ });
 
-    if (email) {
-        mailto += encodeURIComponent(email);
-    }
+ document.querySelectorAll("[data-open]").forEach(btn=>{
+  btn.onclick=()=>openTool(btn.dataset.open);
+ });
+}
 
-    mailto +=
-        "?subject=" +
-        encodeURIComponent(subject);
+function currentList(){
+ const q=searchEl.value.trim().toLowerCase();
+ const active=document.querySelector(".filter.active")?.dataset.cat||"all";
 
-    mailto +=
-        "&body=" +
-        encodeURIComponent(message);
+ return tools.filter(t=>{
+  const matchCat=active==="all"||t.cat===active;
+  const matchSearch=!q||
+   t.title.toLowerCase().includes(q)||
+   t.desc.toLowerCase().includes(q)||
+   t.cat.toLowerCase().includes(q);
 
-    /* إظهار الحالة */
-    const status =
-        document.getElementById("status");
+  return matchCat&&matchSearch;
+ });
+}
 
-    status.style.display = "block";
+searchEl.addEventListener("input",()=>render(currentList()));
 
-    status.innerHTML =
-        "📨 جارٍ فتح تطبيق البريد..." +
-        "<br>" +
-        "بعد إرسال الرسالة يمكنك العودة إلى هذه الصفحة.";
-
-    /* فتح البريد */
-    window.location.href = mailto;
-
+document.querySelectorAll(".filter").forEach(btn=>{
+ btn.onclick=()=>{
+  document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));
+  btn.classList.add("active");
+  render(currentList());
+ };
 });
 
+function openTool(id){
+ const t=tools.find(x=>x.id===id);
+ if(!t)return;
 
-/* عند الرجوع من البريد */
-window.addEventListener(
-    "pageshow",
-    function() {
-        restoreForm();
-    }
-);
+ state.usage++;
+ state.history=[id,...state.history.filter(x=>x!==id)].slice(0,10);
+ save();
 
+ modalTitle.textContent=t.title;
+ modalContent.innerHTML=getToolHTML(t.type);
+ modal.classList.add("show");
 
-/* استعادة البيانات عند فتح الموقع */
-restoreForm();
+ activateTool(t.type);
+}
 
+document.getElementById("closeModal").onclick=()=>modal.classList.remove("show");
+
+modal.onclick=e=>{
+ if(e.target===modal)modal.classList.remove("show");
+};
+
+function getToolHTML(type){
+
+ if(type==="telegram"){
+  return `
+   <div class="field">
+    <label>Username</label>
+    <input id="tgUser" placeholder="@username أو username">
+   </div>
+   <div class="actions">
+    <button class="primary" onclick="buildTelegram()">إنشاء الرابط</button>
+   </div>
+   <div class="result" id="result"></div>
+  `;
+ }
+
+ if(type==="deep"){
+  return `
+   <div class="field">
+    <label>Bot Username</label>
+    <input id="botUser" placeholder="@MyBot">
+   </div>
+   <div class="field">
+    <label>Start Parameter</label>
+    <input id="startParam" placeholder="example123">
+   </div>
+   <button class="primary" onclick="buildDeep()">إنشاء الرابط</button>
+   <div class="result" id="result"></div>
+  `;
+ }
+
+ if(type==="keyboard"){
+  return `
+   <div class="field">
+    <label>أدخل أسماء الأزرار، كل زر في سطر</label>
+    <textarea id="buttons" placeholder="Google&#10;Telegram&#10;Website"></textarea>
+   </div>
+   <button class="primary" onclick="buildKeyboard()">إنشاء JSON</button>
+   <div class="result" id="result"></div>
+  `;
+ }
+
+ if(type==="json"){
+  return `
+   <div class="field">
+    <label>JSON</label>
+    <textarea id="jsonInput" placeholder='{"name":"Ali","active":true}'></textarea>
+   </div>
+   <div class="actions">
+    <button class="primary" onclick="formatJSON()">Format</button>
+    <button class="secondary" onclick="minifyJSON()">Minify</button>
+    <button class="secondary" onclick="copyResult()">Copy</button>
+   </div>
+   <div class="result" id="result"></div>
+  `;
+ }
+
+ if(type==="base64"){
+  return `
+   <div class="field">
+    <label>النص</label>
+    <textarea id="baseInput"></textarea>
+   </div>
+   <div class="actions">
+    <button class="primary" onclick="encodeBase()">Encode</button>
+    <button class="secondary" onclick="decodeBase()">Decode</button>
+   </div>
+   <div class="result" id="result"></div>
+  `;
+ }
+
+ if(type==="hash"){
+  return `
+   <div class="field">
+    <label>النص</label>
+    <textarea id="hashInput"></textarea>
+   </div>
+   <select id="hashType">
+    <option value="SHA-256">SHA-256</option>
+    <option value="SHA-384">SHA-384</option>
+    <option value="SHA-512">SHA-512</option>
+   </select>
+   <br><br>
+   <button class="primary" onclick="makeHash()">Calculate Hash</button>
+   <div class="result" id="result"></div>
+  `;
+ }
+
+ if(type==="uuid"){
+  return `
+   <p>إنشاء UUID عشوائي باستخدام Crypto API في المتصفح.</p>
+   <button class="primary" onclick="makeUUID()">Generate UUID</button>
+   <div class="result" id="result"></div>
+  `;
+ }
+
+ if(type==="timestamp"){
+  return `
+   <div class="field">
+    <label>Unix Timestamp</label>
+    <input id="stampInput" placeholder="اتركه فارغًا للحصول على الوقت الحالي">
+   </div>
+   <div class="actions">
+    <button class="primary" onclick="stampToDate()">Timestamp → Date</button>
+    <button class="secondary" onclick="dateToStamp()">Now → Timestamp</button>
+   </div>
+   <div class="result" id="result"></div>
+  `;
+ }
+
+ if(type==="text"){
+  return `
+   <div class="field">
+    <textarea id="textInput" placeholder="اكتب النص هنا..."></textarea>
+   </div>
+   <div class="actions">
+    <button class="secondary" onclick="textUpper()">UPPERCASE</button>
+    <button class="secondary" onclick="textLower()">lowercase</button>
+    <button class="secondary" onclick="textClean()">تنظيف</button>
+   </div>
+   <div class="result" id="result"></div>
+  `;
+ }
+
+ if(type==="url"){
+  return `
+   <textarea id="urlInput" placeholder="أدخل النص أو الرابط"></textarea>
+   <div class="actions">
+    <button class="primary" onclick="urlEncode()">Encode</button>
+    <button class="secondary" onclick="urlDecode()">Decode</button>
+   </div>
+   <div class="result" id="result"></div>
+  `;
+ }
+
+ if(type==="regex"){
+  return `
+   <div class="field">
+    <label>Pattern</label>
+    <input id="regexPattern" placeholder="^hello">
+   </div>
+   <div class="field">
+    <label>Text</label>
+    <textarea id="regexText"></textarea>
+   </div>
+   <button class="primary" onclick="testRegex()">Test</button>
+   <div class="result" id="result"></div>
+  `;
+ }
+
+ if(type==="calculator"){
+  return `
+   <input id="calcInput" placeholder="مثال: 100*5+20/2">
+   <br><br>
+   <button class="primary" onclick="calculate()">Calculate</button>
+   <div class="result" id="result"></div>
+  `;
+ }
+
+ if(type==="color"){
+  return `
+   <div class="field">
+    <label>HEX</label>
+    <input id="colorInput" placeholder="#6c63ff">
+   </div>
+   <button class="primary" onclick="convertColor()">Convert</button>
+   <div class="result" id="result"></div>
+  `;
+ }
+
+ if(type==="random"){
+  return `
+   <div class="field">
+    <label>Length</label>
+    <input id="randomLength" type="number" value="24" min="1" max="256">
+   </div>
+   <button class="primary" onclick="randomString()">Generate</button>
+   <div class="result" id="result"></div>
+  `;
+ }
+
+ if(type==="device"){
+  return `
+   <div class="result" id="result"></div>
+  `;
+ }
+
+ return "";
+}
+
+function result(value){
+ document.getElementById("result").textContent=value;
+}
+
+function buildTelegram(){
+ let u=document.getElementById("tgUser").value.trim().replace(/^@/,"");
+ if(!u)return result("أدخل Username أولاً");
+ result("https://t.me/"+u);
+}
+
+function buildDeep(){
+ let u=document.getElementById("botUser").value.trim().replace(/^@/,"");
+ let p=document.getElementById("startParam").value.trim();
+
+ if(!u)return result("أدخل Username");
+ result("https://t.me/"+u+(p?"?start="+encodeURIComponent(p):""));
+}
+
+function buildKeyboard(){
+ const lines=document.getElementById("buttons").value
+ .split("\n")
+ .map(x=>x.trim())
+ .filter(Boolean);
+
+ const data={
+  inline_keyboard:lines.map(x=>[
+   {text:x,url:"https://t.me/"}
+  ])
+ };
+
+ result(JSON.stringify(data,null,2));
+}
+
+function formatJSON(){
+ try{
+  const obj=JSON.parse(document.getElementById("jsonInput").value);
+  result(JSON.stringify(obj,null,2));
+ }catch(e){
+  result("Invalid JSON\n"+e.message);
+ }
+}
+
+function minifyJSON(){
+ try{
+  const obj=JSON.parse(document.getElementById("jsonInput").value);
+  result(JSON.stringify(obj));
+ }catch(e){
+  result("Invalid JSON\n"+e.message);
+ }
+}
+
+function encodeBase(){
+ try{
+  result(btoa(unescape(encodeURIComponent(document.getElementById("baseInput").value))));
+ }catch(e){result(e.message)}
+}
+
+function decodeBase(){
+ try{
+  result(decodeURIComponent(escape(atob(document.getElementById("baseInput").value))));
+ }catch(e){result("Invalid Base64")}
+}
+
+async function makeHash(){
+ const text=document.getElementById("hashInput").value;
+ const algo=document.getElementById("hashType").value;
+ const data=new TextEncoder().encode(text);
+ const hash=await crypto.subtle.digest(algo,data);
+ result([...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,"0")).join(""));
+}
+
+function makeUUID(){
+ result(crypto.randomUUID ? crypto.randomUUID() : "UUID غير مدعوم في هذا المتصفح");
+}
+
+function stampToDate(){
+ const value=document.getElementById("stampInput").value.trim();
+ const n=value?Number(value):Math.floor(Date.now()/1000);
+
+ if(!Number.isFinite(n))return result("Invalid timestamp");
+
+ result(new Date(n*1000).toString());
+}
+
+function dateToStamp(){
+ result(Math.floor(Date.now()/1000).toString());
+}
+
+function textUpper(){
+ result(document.getElementById("textInput").value.toUpperCase());
+}
+
+function textLower(){
+ result(document.getElementById("textInput").value.toLowerCase());
+}
+
+function textClean(){
+ const x=document.getElementById("textInput").value;
+ result(x.replace(/\s+/g," ").trim());
+}
+
+function urlEncode(){
+ result(encodeURIComponent(document.getElementById("urlInput").value));
+}
+
+function urlDecode(){
+ try{
+  result(decodeURIComponent(document.getElementById("urlInput").value));
+ }catch(e){
+  result("Invalid encoded text");
+ }
+}
+
+function testRegex(){
+ try{
+  const p=document.getElementById("regexPattern").value;
+  const t=document.getElementById("regexText").value;
+  const r=new RegExp(p,"g");
+  const matches=t.match(r);
+  result(matches ? `Matches: ${matches.length}\n\n${matches.join("\n")}` : "No matches");
+ }catch(e){
+  result("Invalid Regex\n"+e.message);
+ }
+}
+
+function calculate(){
+ const x=document.getElementById("calcInput").value.trim();
+
+ if(!/^[0-9+\-*/().%\s]+$/.test(x))
+  return result("Expression غير صالح");
+
+ try{
+  result(String(Function('"use strict";return ('+x+')')()));
+ }catch(e){
+  result("خطأ في العملية");
+ }
+}
+
+function convertColor(){
+ let h=document.getElementById("colorInput").value.trim().replace("#","");
+
+ if(!/^[0-9a-fA-F]{6}$/.test(h))
+  return result("أدخل HEX من 6 أحرف، مثال: #6c63ff");
+
+ const r=parseInt(h.slice(0,2),16);
+ const g=parseInt(h.slice(2,4),16);
+ const b=parseInt(h.slice(4,6),16);
+
+ result(`HEX: #${h.toUpperCase()}\nRGB: rgb(${r}, ${g}, ${b})`);
+}
+
+function randomString(){
+ const len=Math.min(256,Math.max(1,Number(document.getElementById("randomLength").value)||24));
+ const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+ const arr=new Uint32Array(len);
+ crypto.getRandomValues(arr);
+
+ let out="";
+ for(let i=0;i<len;i++)out+=chars[arr[i]%chars.length];
+
+ result(out);
+}
+
+function activateTool(type){
+ if(type==="device"){
+  result(
+`Platform: ${navigator.platform}
+User Agent: ${navigator.userAgent}
+Language: ${navigator.language}
+Screen: ${screen.width} × ${screen.height}
+Viewport: ${innerWidth} × ${innerHeight}
+Pixel Ratio: ${devicePixelRatio}
+Timezone: ${Intl.DateTimeFormat().resolvedOptions().timeZone}
+Online: ${navigator.onLine}`
+  );
+ }
+}
+
+async function copyResult(){
+ const el=document.getElementById("result");
+ if(!el)return;
+
+ await navigator.clipboard.writeText(el.textContent);
+ showToast("تم النسخ ✓");
+}
+
+document.getElementById("themeBtn").onclick=()=>{
+ document.body.classList.toggle("light");
+
+ localStorage.setItem(
+  "tk_theme",
+  document.body.classList.contains("light")?"light":"dark"
+ );
+
+ document.getElementById("themeBtn").textContent=
+  document.body.classList.contains("light")?"🌙":"☀️";
+};
+
+if(localStorage.getItem("tk_theme")==="light"){
+ document.body.classList.add("light");
+ document.getElementById("themeBtn").textContent="🌙";
+}
+
+function updateConnection(){
+ const online=navigator.onLine;
+ const el=document.getElementById("connection");
+
+ el.textContent=online?"Online":"Offline";
+ el.style.color=online?"var(--success)":"var(--danger)";
+}
+
+window.addEventListener("online",updateConnection);
+window.addEventListener("offline",updateConnection);
+
+const palette=document.getElementById("palette");
+const paletteInput=document.getElementById("paletteInput");
+const paletteItems=document.getElementById("paletteItems");
+
+function openPalette(){
+ palette.classList.add("show");
+ paletteInput.value="";
+ paletteInput.focus();
+ renderPalette();
+}
+
+function closePalette(){
+ palette.classList.remove("show");
+}
+
+function renderPalette(){
+ const q=paletteInput.value.toLowerCase();
+
+ paletteItems.innerHTML=tools
+ .filter(t=>t.title.toLowerCase().includes(q))
+ .slice(0,8)
+ .map(t=>`
+  <div class="palette-item" data-palette="${t.id}">
+   ${t.icon} ${t.title}
+  </div>
+ `).join("");
+
+ document.querySelectorAll("[data-palette]").forEach(x=>{
+  x.onclick=()=>{
+   closePalette();
+   openTool(x.dataset.palette);
+  };
+ });
+}
+
+paletteInput.addEventListener("input",renderPalette);
+
+document.getElementById("paletteBtn").onclick=openPalette;
+
+palette.onclick=e=>{
+ if(e.target===palette)closePalette();
+};
+
+document.addEventListener("keydown",e=>{
+ if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){
+  e.preventDefault();
+  openPalette();
+ }
+
+ if(e.key==="Escape"){
+  closePalette();
+  modal.classList.remove("show");
+ }
+});
+
+render();
+updateStats();
+updateConnection();
 </script>
 
 </body>
-  </html>
+    </html>
